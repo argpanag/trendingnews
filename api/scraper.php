@@ -103,7 +103,7 @@ function extractListingUrls(string $html): array {
     return array_slice($urls, 0, MAX_ARTICLES);
 }
 
-function cleanContentHtml(string $entryHtml, string $baseUrl): string {
+function cleanContentHtml(string $entryHtml, string $baseUrl, string $featuredImage = ''): string {
     libxml_use_internal_errors(true);
     $dom = new DOMDocument();
     // wrap
@@ -112,6 +112,55 @@ function cleanContentHtml(string $entryHtml, string $baseUrl): string {
     $xp = new DOMXPath($dom);
     $root = $dom->getElementById('root');
     if (!$root) return '';
+
+    // Replace Glomex videos with featured image + play button linking to iframe source
+    $iframes = $xp->query('//iframe');
+    for ($i = $iframes->length - 1; $i >= 0; $i--) {
+        $iframe = $iframes->item($i);
+        $src = $iframe->getAttribute('src') ?: $iframe->getAttribute('data-src') ?: $iframe->getAttribute('data-srcset') ?: '';
+        if ($src !== '' && stripos($src, 'glomex') !== false) {
+            $a = $dom->createElement('a');
+            $a->setAttribute('href', $src);
+            $a->setAttribute('target', '_blank');
+            $a->setAttribute('rel', 'noopener noreferrer');
+            $a->setAttribute('class', 'glomex-replacement');
+            $a->setAttribute('style', 'display:block;position:relative;text-decoration:none;margin:16px 0;border-radius:10px;overflow:hidden;');
+
+            $imgSrc = $featuredImage ?: 'https://via.placeholder.com/800x450?text=Video';
+            $img = $dom->createElement('img');
+            $img->setAttribute('src', $imgSrc);
+            $img->setAttribute('alt', 'Video thumbnail');
+            $img->setAttribute('loading', 'lazy');
+            $img->setAttribute('style', 'width:100%;height:auto;display:block;');
+            $a->appendChild($img);
+
+            $overlay = $dom->createElement('span');
+            $overlay->setAttribute('style', 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:68px;background:rgba(0,0,0,0.65);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;line-height:1;box-shadow:0 2px 10px rgba(0,0,0,0.4);');
+            $overlay->textContent = '▶';
+            $a->appendChild($overlay);
+
+            $wrapper = $iframe->parentNode;
+            if ($wrapper && $wrapper->nodeName === 'div' && stripos($wrapper->getAttribute('style'), 'aspect-ratio') !== false) {
+                $wrapper->parentNode->replaceChild($a, $wrapper);
+            } elseif ($iframe->parentNode) {
+                $iframe->parentNode->replaceChild($a, $iframe);
+            }
+            continue;
+        }
+        // Clean empty/lazy iframes without src (e.g., YouTube placeholder with no data-src)
+        $hasSrc = trim($src) !== '' || trim($iframe->getAttribute('srcdoc') ?? '') !== '';
+        if (!$hasSrc) {
+            // Check if iframe is likely a video placeholder (has title or is inside aspect-ratio wrapper)
+            $isVideoPlaceholder = $iframe->hasAttribute('title') || $iframe->hasAttribute('allowfullscreen');
+            $wrapper = $iframe->parentNode;
+            $isInVideoWrapper = $wrapper && $wrapper->nodeName === 'div' && (stripos($wrapper->getAttribute('style'), 'aspect-ratio') !== false || stripos($wrapper->getAttribute('class'), 'video') !== false || stripos($wrapper->getAttribute('class'), 'intext-video') !== false);
+            if ($isVideoPlaceholder || $isInVideoWrapper) {
+                // Remove empty video iframe entirely (or replace with featured image if you prefer)
+                $target = $isInVideoWrapper ? $wrapper : $iframe;
+                if ($target->parentNode) $target->parentNode->removeChild($target);
+            }
+        }
+    }
 
     // Remove unwanted nodes
     $removeQueries = [
@@ -151,6 +200,14 @@ function cleanContentHtml(string $entryHtml, string $baseUrl): string {
             $a->setAttribute('rel','noopener noreferrer');
             // remove tracking params
         }
+    }
+    // Convert lazy data-src to src for remaining iframes (e.g., YouTube)
+    foreach ($xp->query('//iframe[@data-src]') as $iframe) {
+        if (!$iframe->getAttribute('src')) {
+            $iframe->setAttribute('src', $iframe->getAttribute('data-src'));
+        }
+        $iframe->removeAttribute('data-src');
+        $iframe->removeAttribute('data-srcset');
     }
     // Remove empty divs / p with no text and no img
     foreach ($xp->query('//div[not(*) and normalize-space(text())=""] | //p[not(*) and normalize-space(text())=""]') as $n) {
@@ -245,7 +302,7 @@ function extractArticleData(string $html, string $url): ?array {
         if (preg_match('/<div class="column p-0 entry-content[^"]*"[^>]*>(.*?)<\/div>\s*<div class="tags/is',$html,$m)) $entryHtml=$m[1];
     }
 
-    $cleaned = cleanContentHtml($entryHtml, $url);
+    $cleaned = cleanContentHtml($entryHtml, $url, $img);
     // excerpt: first 180 chars of plain text or meta description
     $excerpt = '';
     $metaDesc = $xp->query('//meta[@name="description"]/@content')->item(0);
@@ -477,6 +534,23 @@ function main(): void {
         // Sort by published_at DESC
         uasort($existing, fn($a,$b)=> strcmp($b['published_at'],$a['published_at']));
         $articles = array_values($existing);
+
+        // Retroactively fix existing articles that still contain glomex iframes (migrate old data)
+        foreach ($articles as &$art) {
+            if (isset($art['content']) && stripos($art['content'], 'glomex') !== false) {
+                $art['content'] = cleanContentHtml($art['content'], $art['source_url'] ?? '', $art['image_url'] ?? '');
+            }
+        }
+        unset($art);
+        foreach ($existing as $k => &$v) {
+            if (isset($v['content']) && stripos($v['content'], 'glomex') !== false) {
+                $v['content'] = cleanContentHtml($v['content'], $v['source_url'] ?? $k, $v['image_url'] ?? '');
+                // sync to articles
+                foreach ($articles as &$a2) if (($a2['source_url'] ?? '') === ($v['source_url'] ?? $k)) { $a2['content'] = $v['content']; break; }
+                unset($a2);
+            }
+        }
+        unset($v);
 
         // Ensure dirs
         @mkdir(API_DATA_DIR,0777,true);
