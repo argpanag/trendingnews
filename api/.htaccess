@@ -1,0 +1,12 @@
+# CORS + cache for JSON
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+  Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+<FilesMatch "\.json$">
+  Header set Cache-Control "public, max-age=300"
+  Header set Content-Type "application/json; charset=utf-8"
+</FilesMatch>
+# Pretty URL: /api/articles.json handled directly
+# /api/scraper.php needs no rewrite

@@ -1,3 +1,5 @@
-// Future API config - point ingest to your real API
-// Set in GitHub Actions Secrets as API_URL
-export const API_URL = ''; // e.g. 'https://your-api.com/articles'
+// API config - PHP scraper -> JSON
+// Local XAMPP: ./api/data/articles.json + ./api/index.php
+// Production: same folder committed to GitHub Pages, or absolute https://php-host.com/api/data/articles.json
+export const API_URL = './api/data/articles.json';
+export const API_FALLBACK = './data/articles.json';

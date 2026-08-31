@@ -1,0 +1,13 @@
+{
+    "id": 2,
+    "slug": "sqlite-on-the-edge-one-file-all-users",
+    "title": "SQLite on the Edge: One File, All Users",
+    "excerpt": "How Cloudflare D1 and Turso bring SQLite to the edge for free.",
+    "content": "<p>SQLite was never meant for the web, until D1 and Turso. A single <code>.db</code> file is now replicated globally. For GitHub Pages (static), we use GitHub Actions to rebuild the DB hourly and export JSON. For live writes, D1 gives you 5GB free and 5M reads/day.</p>",
+    "category": "tech",
+    "image_url": "https://picsum.photos/seed/sqlite/800/450",
+    "source_url": "https://example.com/sqlite-edge",
+    "author": "Mock API",
+    "published_at": "2026-08-31T10:28:51.607Z",
+    "created_at": "2026-08-31 12:28:51"
+}

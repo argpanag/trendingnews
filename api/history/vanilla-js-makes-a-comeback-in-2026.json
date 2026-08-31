@@ -1,0 +1,13 @@
+{
+    "id": 1,
+    "slug": "vanilla-js-makes-a-comeback-in-2026",
+    "title": "Vanilla JS Makes a Comeback in 2026",
+    "excerpt": "Developers rediscover the power of zero-dependency frontends for speed and longevity.",
+    "content": "<p>In 2026, teams are shipping faster by dropping heavy frameworks. A single <code>app.js</code> with <code>fetch()</code> and native DOM APIs handles routing, rendering, and caching without a build step. GitHub Pages + Cloudflare proves you can scale to millions on the free tier.</p><p>This article was ingested via the hourly cron into SQLite.</p>",
+    "category": "tech",
+    "image_url": "https://picsum.photos/seed/vanilla/800/450",
+    "source_url": "https://example.com/vanilla-js-comeback",
+    "author": "Mock API",
+    "published_at": "2026-08-31T11:58:51.607Z",
+    "created_at": "2026-08-31 12:28:51"
+}

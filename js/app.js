@@ -11,23 +11,40 @@ let allArticles = [];
 let activeFilter = 'all';
 let searchQ = '';
 
+import { API_URL, API_FALLBACK } from './config.js';
+
 async function load() {
-  try {
-    const res = await fetch('./data/articles.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    allArticles = data.articles || [];
-    els.generated.textContent = data.generated_at ? `Updated: ${new Date(data.generated_at).toLocaleString()}` : '';
-    els.meta.textContent = `${allArticles.length} articles · SQLite + hourly cron · Free tier`;
-    render();
-  } catch (e) {
-    els.meta.textContent = 'Failed to load articles. Run: npm run ingest (or check data/articles.json exists)';
-    console.error(e);
-    els.grid.innerHTML = `<div style="padding:24px;background:#fff;border:1px solid #e5e7eb;border-radius:12px">
-      <b>No data yet.</b> Run <code>node scripts/ingest.js && node scripts/export.js</code> to seed, then refresh.<br>
-      <small>${e.message}</small>
-    </div>`;
+  // Try PHP scraper API first, fallback to legacy SQLite JSON
+  const urls = [API_URL, API_FALLBACK, './data/articles.json'];
+  let lastErr = null;
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      const data = await res.json();
+      // accept both {articles:[]} and [...] and single object
+      if (Array.isArray(data)) allArticles = data;
+      else if (data.articles) allArticles = data.articles;
+      else if (data.slug) allArticles = [data];
+      else allArticles = [];
+      if (allArticles.length === 0 && data.count === 0) throw new Error('empty ' + url);
+      els.generated.textContent = data.generated_at ? `Updated: ${new Date(data.generated_at).toLocaleString()}` : '';
+      els.meta.textContent = `${allArticles.length} articles · PHP scraper → JSON · history saved`;
+      render();
+      return;
+    } catch (e) {
+      lastErr = e;
+      console.warn('load failed', url, e.message);
+    }
   }
+  els.meta.textContent = 'Failed to load articles. Run php api/scraper.php or npm run ingest';
+  console.error(lastErr);
+  els.grid.innerHTML = `<div style="padding:24px;background:#fff;border:1px solid #e5e7eb;border-radius:12px">
+      <b>No data yet.</b> Run <code>php api/scraper.php</code> (or <code>node scripts/ingest.js && node scripts/export.js</code>), then refresh.<br>
+      <small>${lastErr ? lastErr.message : ''}</small>
+      <br><button onclick="location.reload()" style="margin-top:12px;padding:6px 12px;border:1px solid #e5e7eb;border-radius:999px;cursor:pointer">Retry</button>
+      <a href="api/scraper.php" target="_blank" style="margin-left:8px">Run scraper now</a>
+    </div>`;
 }
 
 function filtered() {
