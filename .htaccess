@@ -1,0 +1,10 @@
+# No-cache for all HTML and JSON (prevent stale)
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+  Header set Expires "0"
+</IfModule>
+# Also for articles subfolders
+<FilesMatch "\.(html|json)$">
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+</FilesMatch>

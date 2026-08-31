@@ -1,7 +1,7 @@
 <?php
 /**
- * Enimerotiko.gr Scraper → JSON API
- * Fetches https://www.enimerotiko.gr/eidiseis/, extracts article URLs + content,
+ * Content Scraper → JSON API
+ * Fetches listing, extracts article URLs + content,
  * cleans ads/internal links, saves to api/data/articles.json + history + data/articles.json
  *
  * Usage: php scraper.php              (CLI)  - skips existing
@@ -290,7 +290,7 @@ function extractArticleData(string $html, string $url): ?array {
     if (!$published) $published = date('c');
 
     // author
-    $author = 'Enimerotiko.gr';
+    $author = 'TheTools';
     // try author vcard
     $authorNodes = $xp->query('//span[contains(@class,"author")] | //a[@rel="author"] | //meta[@name="author"]/@content');
     foreach ($authorNodes as $a) {
@@ -433,6 +433,9 @@ function buildSeoHtml(array $a): string {
 <html lang="el">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{$title} | thetools.com</title>
   <meta name="description" content="{$excerpt}" />
@@ -472,7 +475,7 @@ function buildSeoHtml(array $a): string {
       <div style="color:#6b7280;font-size:.9rem">{$author} · {$humanDate} · <a href="{$sourceUrl}" target="_blank" rel="noopener">πηγή</a> · <a href="{$urlEsc}">μόνιμος σύνδεσμος</a></div>
       <div class="content">{$content}</div>
       <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
-      <p style="color:#6b7280;font-size:.85rem">Άρθρο από <a href="{$sourceUrl}" target="_blank" rel="noopener">enimerotiko.gr</a> · αρχειοθετήθηκε στο thetools.com</p>
+      <p style="color:#6b7280;font-size:.85rem">Source: <a href="{$sourceUrl}" target="_blank" rel="noopener">original</a> · archived on thetools.com</p>
     </article>
   </main>
   <footer class="site-footer">
@@ -640,6 +643,12 @@ function main(): void {
         $robots = "User-agent: *\nAllow: /\nSitemap: " . rtrim(SITE_URL,'/') . "/sitemap.xml\n";
         if (!file_exists(__DIR__ . '/../robots.txt') || strpos(file_get_contents(__DIR__ . '/../robots.txt'), 'Sitemap:') === false) {
             file_put_contents(__DIR__ . '/../robots.txt', $robots);
+        }
+
+        // Rebuild index.html as static with links to all separate article pages (no-cache)
+        if (file_exists(__DIR__ . '/build_index.php')) {
+            require_once __DIR__ . '/build_index.php';
+            if (function_exists('buildIndex')) buildIndex();
         }
 
         $result = ['ok'=>true,'found'=>count($urls),'new'=>$new,'skipped'=>$skipped,'total'=>count($articles),'days'=>count($byDay),'seo'=>count($articles),'generated_at'=>$payload['generated_at']];

@@ -1,10 +1,9 @@
 <?php
 /**
- * Google Trends USA → JSON + SEO
- * Reads https://trends.google.com/trending/rss?geo=US (Daily Search Trends)
- * Extracts trending queries + ht:news_item URLs, scrapes each news article generically,
+ * Trending News Scraper → JSON + SEO
+ * Reads trending feed, extracts news URLs, scrapes each article generically,
  * cleans share buttons/ads/etc and leaves clean HTML content,
- * saves to api/data/trends/YYYY-MM-DD.json + history + SEO (articles/trends/<slug>/)
+ * saves to api/data/trends/YYYY-MM-DD.json + history + SEO (articles/<slug>/)
  *
  * Usage: php api/trends_scraper.php              (skips existing)
  *        php api/trends_scraper.php --force       (reload even if exists, also --reload, -f)
@@ -14,7 +13,7 @@ declare(strict_types=1);
 const TRENDS_RSS = 'https://trends.google.com/trending/rss?geo=US';
 const TRENDS_DATA_DIR = __DIR__ . '/data/trends';
 const TRENDS_HISTORY_DIR = __DIR__ . '/history_trends';
-const TRENDS_SEO_DIR = __DIR__ . '/../articles/trends';
+const TRENDS_SEO_DIR = __DIR__ . '/../articles';
 const SITE_URL_TRENDS = 'https://thetools.com';
 const MAX_TRENDS = 15;
 const USER_AGENT_T = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
@@ -190,10 +189,10 @@ function extractArticleGeneric(string $html, string $url): ?array {
         'slug'=>$slug,
         'excerpt'=>$excerpt,
         'content'=>$content,
-        'category'=>'trends',
+        'category'=>'general',
         'image_url'=>$img,
         'source_url'=>$url,
-        'author'=>'Google Trends US',
+        'author'=>'TheTools',
         'published_at'=>$published,
         'trend'=>true,
     ];
@@ -263,11 +262,16 @@ function mainT(): void {
         foreach($articles as $a){
             $slug=$a['slug']; $dir=TRENDS_SEO_DIR."/$slug"; @mkdir($dir,0777,true);
             $title=escT($a['title']); $excerpt=escT($a['excerpt']); $img=escT($a['image_url']); $url=escT($a['source_url']);
-            $fullUrl='https://thetools.com/articles/trends/'.$slug.'/';
+            $fullUrl='https://thetools.com/articles/'.$slug.'/';
             $html=<<<HTML
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{$title} | thetools.com</title><meta name="description" content="{$excerpt}"/><link rel="canonical" href="{$fullUrl}"/><meta property="og:title" content="{$title}"/><meta property="og:description" content="{$excerpt}"/><meta property="og:image" content="{$img}"/><link rel="stylesheet" href="../../../css/style.css"/></head><body><header class="site-header"><div class="wrap"><a class="logo" href="../../../">thetools<span>.com</span></a></div></header><main class="wrap"><article class="detail"><a href="../../../">← Back</a><img src="{$img}" alt="" style="width:100%;max-height:420px;object-fit:cover"/><h1>{$title}</h1><div class="content">{$a['content']}</div><p><a href="{$url}" target="_blank" rel="noopener">source</a></p></article></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/><meta http-equiv="Pragma" content="no-cache"/><meta http-equiv="Expires" content="0"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{$title} | thetools.com</title><meta name="description" content="{$excerpt}"/><link rel="canonical" href="{$fullUrl}"/><meta property="og:title" content="{$title}"/><meta property="og:description" content="{$excerpt}"/><meta property="og:image" content="{$img}"/><link rel="stylesheet" href="../../../css/style.css"/></head><body><header class="site-header"><div class="wrap"><a class="logo" href="../../../">thetools<span>.com</span></a></div></header><main class="wrap"><article class="detail"><a href="../../../">← Back</a><img src="{$img}" alt="" style="width:100%;max-height:420px;object-fit:cover"/><h1>{$title}</h1><div class="content">{$a['content']}</div><p><a href="{$url}" target="_blank" rel="noopener">source</a></p></article></main></body></html>
 HTML;
             file_put_contents("$dir/index.html",$html);
+        }
+        // Rebuild index.html as static (no-cache)
+        if (file_exists(__DIR__ . '/build_index.php')) {
+            require_once __DIR__ . '/build_index.php';
+            if (function_exists('buildIndex')) buildIndex();
         }
         $result=['ok'=>true,'trends'=>count($trends),'scraped'=>count($toScrape),'new'=>$new,'skipped'=>$skipped,'total'=>count($articles)];
         echo $isCli ? json_encode($result,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)."\n" : json_encode($result,JSON_UNESCAPED_UNICODE);
