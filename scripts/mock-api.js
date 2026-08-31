@@ -49,6 +49,6 @@ export function getMockArticles() {
 }
 
 // If run directly: print JSON like a real API would
-if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}`) {
+if (process.argv[1] && import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}`) {
   console.log(JSON.stringify(getMockArticles(), null, 2));
 }
