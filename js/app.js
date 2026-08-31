@@ -11,7 +11,7 @@ let allArticles = [];
 let activeFilter = 'all';
 let searchQ = '';
 
-import { API_INDEX, API_URL, API_FALLBACK, API_DATA_BASE } from './config.js';
+import { API_INDEX, API_URL, API_FALLBACK, API_DATA_BASE, TRENDS_INDEX, TRENDS_DATA_BASE } from './config.js';
 
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-store' });
@@ -30,12 +30,28 @@ async function load() {
       let merged = [];
       let latestGenerated = idx.generated_at;
       for (const p of dayPayloads) if (p && p.articles) merged = merged.concat(p.articles);
+      // Optionally merge Google Trends USA (if available)
+      try {
+        const tIdx = await fetchJson(TRENDS_INDEX);
+        if (tIdx.days && Array.isArray(tIdx.days) && tIdx.days.length>0) {
+          const tFiles = tIdx.days.map(d => TRENDS_DATA_BASE + d.file);
+          const tPayloads = await Promise.all(tFiles.map(u => fetchJson(u).catch(()=>null)));
+          let tMerged=[];
+          for(const p of tPayloads) if(p && p.articles) tMerged=tMerged.concat(p.articles);
+          if(tMerged.length>0){
+            merged = merged.concat(tMerged);
+            console.log(`merged ${tMerged.length} trends articles`);
+          }
+        }
+      } catch(e){ console.warn('trends not loaded', e.message); }
+
       // sort by published_at DESC to keep global order
       merged.sort((a,b) => new Date(b.published_at) - new Date(a.published_at));
       if (merged.length === 0) throw new Error('empty day files');
       allArticles = merged;
       els.generated.textContent = latestGenerated ? `Updated: ${new Date(latestGenerated).toLocaleString()}` : '';
-      els.meta.textContent = `${allArticles.length} articles · ${idx.days.length} days · split by day`;
+      const trendsCount = merged.filter(a=>a.category==='trends').length;
+      els.meta.textContent = `${allArticles.length} articles · ${idx.days.length} days · split by day` + (trendsCount ? ` · +${trendsCount} trends` : '');
       render();
       return;
     }
@@ -84,8 +100,8 @@ function filtered() {
 
 function cardHtml(a) {
   const date = new Date(a.published_at).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
-  // SEO: static HTML at /articles/<slug>/ for crawlers, JS intercepts for SPA
-  const staticHref = `articles/${a.slug}/`;
+  // SEO: static HTML at /articles/<slug>/ (trends at /articles/trends/<slug>/) for crawlers, JS intercepts for SPA
+  const staticHref = a.category === 'trends' ? `articles/trends/${a.slug}/` : `articles/${a.slug}/`;
   return `
   <article class="card">
     <a href="${staticHref}" data-slug="${a.slug}" class="card-link"><img src="${a.image_url || ''}" alt="" loading="lazy" onerror="this.style.display='none'"></a>
@@ -110,12 +126,13 @@ function render() {
     }
     els.grid.innerHTML = '';
     els.detail.classList.remove('hidden');
+    const staticHref2 = a.category === 'trends' ? `articles/trends/${a.slug}/` : `articles/${a.slug}/`;
     els.detail.innerHTML = `
-      <a href="#/">← Back</a> · <a href="articles/${a.slug}/" style="font-size:.85rem;color:#6b7280">static SEO version</a>
+      <a href="#/">← Back</a> · <a href="${staticHref2}" style="font-size:.85rem;color:#6b7280">static SEO version</a>
       <img src="${a.image_url || ''}" alt="" onerror="this.style.display='none'">
       <div class="badge">${escapeHtml(a.category)}</div>
       <h1>${escapeHtml(a.title)}</h1>
-      <div style="color:#6b7280;font-size:.9rem">${escapeHtml(a.author || '')} · ${new Date(a.published_at).toLocaleString()} · <a href="${a.source_url}" target="_blank" rel="noopener">source</a> · <a href="articles/${a.slug}/" rel="canonical">permalink</a></div>
+      <div style="color:#6b7280;font-size:.9rem">${escapeHtml(a.author || '')} · ${new Date(a.published_at).toLocaleString()} · <a href="${a.source_url}" target="_blank" rel="noopener">source</a> · <a href="${staticHref2}" rel="canonical">permalink</a></div>
       <div class="content">${a.content || ''}</div>
     `;
     window.scrollTo(0,0);

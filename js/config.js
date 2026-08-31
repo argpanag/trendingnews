@@ -3,3 +3,5 @@ export const API_INDEX = './api/data/index.json';
 export const API_URL = './api/data/articles.json'; // legacy aggregated fallback
 export const API_FALLBACK = './data/articles.json';
 export const API_DATA_BASE = './api/data/'; // + YYYY-MM-DD.json
+export const TRENDS_INDEX = './api/data/trends/index.json';
+export const TRENDS_DATA_BASE = './api/data/trends/';
