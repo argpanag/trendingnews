@@ -3,10 +3,12 @@
  * Google Trends USA → JSON + SEO
  * Reads https://trends.google.com/trending/rss?geo=US (Daily Search Trends)
  * Extracts trending queries + ht:news_item URLs, scrapes each news article generically,
+ * cleans share buttons/ads/etc and leaves clean HTML content,
  * saves to api/data/trends/YYYY-MM-DD.json + history + SEO (articles/trends/<slug>/)
  *
- * Usage: php api/trends_scraper.php
- *        GET /api/trends_scraper.php?limit=12
+ * Usage: php api/trends_scraper.php              (skips existing)
+ *        php api/trends_scraper.php --force       (reload even if exists, also --reload, -f)
+ *        GET /api/trends_scraper.php?force=1      (HTTP reload)
  */
 declare(strict_types=1);
 const TRENDS_RSS = 'https://trends.google.com/trending/rss?geo=US';
@@ -16,6 +18,14 @@ const TRENDS_SEO_DIR = __DIR__ . '/../articles/trends';
 const SITE_URL_TRENDS = 'https://thetools.com';
 const MAX_TRENDS = 15;
 const USER_AGENT_T = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
+
+function isForceT(): bool {
+    if (php_sapi_name() === 'cli') {
+        global $argv;
+        return in_array('--force', $argv ?? []) || in_array('--reload', $argv ?? []) || in_array('-f', $argv ?? []);
+    }
+    return isset($_GET['force']) || isset($_GET['reload']) || isset($_GET['refresh']) || isset($_GET['force_reload']);
+}
 
 function fetchUrlT(string $url): string {
     $ch=curl_init($url);
@@ -36,12 +46,11 @@ function cleanGeneric(string $html, string $imgFallback=''): string {
     libxml_use_internal_errors(true);
     $dom=new DOMDocument(); @$dom->loadHTML(mb_encode_numericentity($html,[0x80,0x10FFFF,0,0x1FFFFF],'UTF-8'));
     $xp=new DOMXPath($dom);
-    // Try to find main content: article, entry-content, post-content, etc.
-    $cands = $xp->query('//article | //div[contains(@class,"entry-content")] | //div[contains(@class,"post-content")] | //div[contains(@class,"article-body")] | //div[contains(@class,"story-body")] | //main');
+    // Find main content candidate
+    $cands = $xp->query('//article | //div[contains(@class,"entry-content")] | //div[contains(@class,"post-content")] | //div[contains(@class,"article-body")] | //div[contains(@class,"story-body")] | //div[contains(@class,"article-content")] | //main');
     $best=null; $maxLen=0;
     foreach($cands as $c){
         $len = strlen(trim($c->textContent));
-        // prefer article tag
         if($c->nodeName==='article') $len+=500;
         if($len>$maxLen){ $maxLen=$len; $best=$c; }
     }
@@ -49,20 +58,77 @@ function cleanGeneric(string $html, string $imgFallback=''): string {
     if($best){
         foreach($best->childNodes as $ch) $inner.=$dom->saveHTML($ch);
     } else {
-        // fallback: all <p> in body
         $ps=$xp->query('//p'); foreach($ps as $p) $inner.=$dom->saveHTML($p);
     }
-    // Clean via DOM again
+
     $dom2=new DOMDocument(); $wrapped='<div id="root">'.$inner.'</div>';
     @$dom2->loadHTML(mb_encode_numericentity($wrapped,[0x80,0x10FFFF,0,0x1FFFFF],'UTF-8'), LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD);
     $xp2=new DOMXPath($dom2); $root=$dom2->getElementById('root');
-    foreach(['//script','//style','//noscript','//iframe[contains(@src,"doubleclick")]','//aside','//nav','//form','//button'] as $q){
-        $nodes=$xp2->query($q); for($i=$nodes->length-1;$i>=0;$i--) if($nodes->item($i)->parentNode) $nodes->item($i)->parentNode->removeChild($nodes->item($i));
+    // Remove share buttons, ads, related, comments, etc.
+    $removeSelectors = [
+        '//script','//style','//noscript','//iframe[contains(@src,"doubleclick") or contains(@src,"googlesyndication") or contains(@src,"googletag")]',
+        '//aside','//nav','//form','//button',
+        '//*[contains(@class,"share")]','//*[contains(@class,"social-share")]','//*[contains(@class,"addthis")]','//*[contains(@class,"share-buttons")]',
+        '//*[contains(@class,"social")]','//*[contains(@class,"breadcrumb")]','//*[contains(@class,"byline")]',
+        '//*[contains(@class,"author-info")]','//*[contains(@class,"posted-on")]',
+        '//*[contains(@class,"comment")]','//*[contains(@class,"openweb")]','//*[contains(@id,"conversation")]',
+        '//*[contains(@class,"recommended")]','//*[contains(@class,"related")]','//*[contains(@class,"zergnet")]',
+        '//*[contains(@class,"outbrain")]','//*[contains(@class,"taboola")]',
+        '//*[contains(@class,"google-ad")]','//*[contains(@class,"placeholder")]','//*[contains(@class,"ad-")]','//*[contains(@id,"div-ad")]','//*[contains(@class,"advert")]',
+        '//*[contains(@class,"sidebar")]','//*[contains(@class,"under-art")]','//*[contains(@class,"gallery-image-credit")]',
+        '//*[contains(@class,"byline-container")]','//*[contains(@class,"columns-holder")]//div[contains(@class,"loading-more")]',
+        '//div[contains(@class,"floatingAd")]','//div[@id="floatingAd"]','//div[@id="ajax-sidebar"]',
+        '//*[contains(@class,"newsletter")]','//*[contains(@class,"subscribe")]','//*[contains(@class,"follow-us")]',
+    ];
+    foreach($removeSelectors as $q){
+        $nodes=$xp2->query($q);
+        if(!$nodes) continue;
+        for($i=$nodes->length-1;$i>=0;$i--){
+            $n=$nodes->item($i);
+            if($n && $n->parentNode) $n->parentNode->removeChild($n);
+        }
     }
-    // Unwrap internal glomex already handled generically: keep external links
-    foreach($xp2->query('//a[@href]') as $a){ $a->setAttribute('target','_blank'); $a->setAttribute('rel','noopener noreferrer'); }
-    $out=''; foreach($root->childNodes as $ch) $out.=$dom2->saveHTML($ch);
+    // Also remove empty divs that only contained removed widgets
+    foreach($xp2->query('//div[not(*) and normalize-space(text())=""] | //p[not(*) and normalize-space(text())=""]') as $n){
+        if($n->parentNode) $n->parentNode->removeChild($n);
+    }
+    // Keep only clean content tags in order: p, h2, h3, h4, ul, ol, blockquote, figure, img
+    $cleanRoot = $dom2->createElement('div');
+    $cleanRoot->setAttribute('id','clean');
+    $allowed = $xp2->query('.//p[normalize-space()!=""] | .//h2 | .//h3 | .//h4 | .//ul | .//ol | .//blockquote | .//figure', $root);
+    foreach($allowed as $node){
+        // Skip if inside already removed share/comment etc (already removed) or if it's inside a figure we already handle
+        // Clone node
+        $clone = $node->cloneNode(true);
+        // Clean attributes: keep only href/src/alt for a/img, remove data-*, onclick, etc.
+        $xpathClean = new DOMXPath($dom2);
+        foreach($xpathClean->query('.//*', $clone) as $el){
+            // Remove unwanted attributes
+            $toRemove=[];
+            foreach($el->attributes ?? [] as $attr){
+                $name=$attr->nodeName;
+                if(!in_array($name, ['href','src','alt','title'])) $toRemove[]=$name;
+            }
+            foreach($toRemove as $r) $el->removeAttribute($r);
+            // Ensure external links have target
+            if($el->nodeName==='a' && $el->hasAttribute('href')){
+                $el->setAttribute('target','_blank');
+                $el->setAttribute('rel','noopener noreferrer');
+            }
+        }
+        $cleanRoot->appendChild($clone);
+    }
+    // If nothing found, fallback to root inner
+    if($cleanRoot->childNodes->length===0){
+        $out=''; foreach($root->childNodes as $ch) $out.=$dom2->saveHTML($ch);
+        $out=trim($out);
+        if(!str_contains($out,'<p') && strlen(strip_tags($out))>50) $out='<p>'.escT(strip_tags($out)).'</p>';
+        return $out;
+    }
+    $out=''; foreach($cleanRoot->childNodes as $ch) $out.=$dom2->saveHTML($ch);
     $out=trim($out);
+    // Final sweep: remove leftover empty comments
+    $out=preg_replace('/<!--.*?-->/s','',$out);
     if(!str_contains($out,'<p') && strlen(strip_tags($out))>50) $out='<p>'.escT(strip_tags($out)).'</p>';
     return $out;
 }
@@ -153,18 +219,21 @@ function mainT(): void {
         }
         if(is_dir(TRENDS_HISTORY_DIR)) foreach(glob(TRENDS_HISTORY_DIR.'/*.json') as $f){ $j=json_decode(file_get_contents($f),true); if(isset($j['source_url'])&&!isset($existing[$j['source_url']])) $existing[$j['source_url']]=$j; }
 
-        $new=0; $skipped=0;
+        $forceT = isForceT();
+        if($forceT && $isCli) echo "[trends] force reload enabled\n";
+        $new=0; $skipped=0; $updated=0;
         foreach($toScrape as $item){
             $url=$item['url'];
-            if(isset($existing[$url])) { $skipped++; continue; }
+            if(isset($existing[$url]) && !$forceT) { $skipped++; continue; }
+            $isUpdate = isset($existing[$url]) && $forceT;
             try{
                 $html=fetchUrlT($url);
                 $data=extractArticleGeneric($html,$url);
                 if(!$data){ $skipped++; continue; }
-                // enrich with trend title
                 $data['trend_title']=$item['title'] ?? '';
-                $existing[$url]=$data; $new++;
-                if($isCli) echo "  + {$data['slug']} | {$data['title']}\n";
+                $existing[$url]=$data;
+                if($isUpdate) $updated++; else $new++;
+                if($isCli) echo "  ".($isUpdate?"~":"+")." {$data['slug']} | {$data['title']}".($isUpdate?" (reloaded)":"")."\n";
                 usleep(400000);
             }catch(Throwable $e){ if($isCli) echo "  ! $url: ".$e->getMessage()."\n"; $skipped++; }
         }
@@ -179,8 +248,17 @@ function mainT(): void {
         }
         $idx=['generated_at'=>date('c'),'total'=>count($articles),'days'=>array_map(fn($d)=>['date'=>$d,'count'=>count($byDay[$d]),'file'=>"$d.json"], array_keys($byDay))];
         file_put_contents(TRENDS_DATA_DIR.'/index.json', json_encode($idx, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
-        // history
-        foreach($articles as $a){ $path=TRENDS_HISTORY_DIR.'/'.($a['slug']??md5($a['source_url'])).'.json'; if(!file_exists($path)) file_put_contents($path, json_encode($a, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT)); }
+        // history (overwrite if force or changed)
+        $forceT = $forceT ?? isForceT();
+        foreach($articles as $a){
+            $path=TRENDS_HISTORY_DIR.'/'.($a['slug']??md5($a['source_url'])).'.json';
+            $shouldWrite = !file_exists($path) || $forceT;
+            if(!$shouldWrite && file_exists($path)){
+                $old=json_decode(file_get_contents($path),true);
+                if(($old['content']??'') !== ($a['content']??'')) $shouldWrite=true;
+            }
+            if($shouldWrite) file_put_contents($path, json_encode($a, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+        }
         // SEO - reuse same builder as scraper.php simple version
         foreach($articles as $a){
             $slug=$a['slug']; $dir=TRENDS_SEO_DIR."/$slug"; @mkdir($dir,0777,true);

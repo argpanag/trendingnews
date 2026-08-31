@@ -4,8 +4,9 @@
  * Fetches https://www.enimerotiko.gr/eidiseis/, extracts article URLs + content,
  * cleans ads/internal links, saves to api/data/articles.json + history + data/articles.json
  *
- * Usage: php scraper.php       (CLI)
- *        GET /api/scraper.php  (HTTP, cron)
+ * Usage: php scraper.php              (CLI)  - skips existing
+ *        php scraper.php --force       (CLI)  - reload even if exists (also --reload, -f)
+ *        GET /api/scraper.php?force=1  (HTTP) - reload (also ?reload=1, ?refresh=1)
  */
 
 declare(strict_types=1);
@@ -20,6 +21,14 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 // SEO
 const SITE_URL = 'https://thetools.com'; // change to your domain or GitHub Pages URL (e.g. https://user.github.io/thetools.com)
 const SEO_DIR = __DIR__ . '/../articles'; // static HTML per article: articles/<slug>/index.html
+
+function isForce(): bool {
+    if (php_sapi_name() === 'cli') {
+        global $argv;
+        return in_array('--force', $argv ?? []) || in_array('--reload', $argv ?? []) || in_array('-f', $argv ?? []);
+    }
+    return isset($_GET['force']) || isset($_GET['reload']) || isset($_GET['refresh']) || isset($_GET['force_reload']);
+}
 
 function fetchUrl(string $url): string {
     $ch = curl_init($url);
@@ -513,18 +522,20 @@ function main(): void {
         $existing = loadExisting();
         $new = 0; $updated=0; $skipped=0;
 
+        $force = isForce();
+        if ($force && $isCli) echo "[scraper] force reload enabled — re-scraping existing articles\n";
+        if ($force && !$isCli) header('X-Force-Reload: 1');
         foreach ($urls as $url) {
-            if (isset($existing[$url])) { $skipped++; continue; } // history dedupe
+            if (isset($existing[$url]) && !$force) { $skipped++; continue; } // history dedupe unless force
+            $isUpdate = isset($existing[$url]) && $force;
             try {
                 $html = fetchUrl($url);
                 $data = extractArticleData($html, $url);
                 if (!$data) { $skipped++; continue; }
-                // ensure history & existing
                 $existing[$url] = $data;
-                $new++;
-                // delay politely
-                usleep(200000); // 0.2s
-                if ($isCli) echo "  + {$data['slug']} | {$data['title']}\n";
+                if ($isUpdate) $updated++; else $new++;
+                usleep(200000);
+                if ($isCli) echo "  ".($isUpdate ? "~" : "+")." {$data['slug']} | {$data['title']}".($isUpdate?" (reloaded)":"")."\n";
             } catch (Throwable $e) {
                 if ($isCli) echo "  ! failed $url : ".$e->getMessage()."\n";
                 $skipped++;
@@ -598,11 +609,17 @@ function main(): void {
         file_put_contents(OUTPUT_JSON, json_encode($payload, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
         file_put_contents(LEGACY_JSON, json_encode($payload, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 
-        // Write per-article history
+        // Write per-article history (overwrite if force or content changed)
+        $force = isForce();
         foreach ($articles as $a) {
             $slug = $a['slug'] ?? slugify($a['title'],$a['source_url']);
             $path = HISTORY_DIR . '/' . $slug . '.json';
-            if (!file_exists($path)) {
+            $shouldWrite = !file_exists($path) || $force;
+            if (!$shouldWrite && file_exists($path)) {
+                $old = json_decode(file_get_contents($path), true);
+                if (($old['content'] ?? '') !== ($a['content'] ?? '') || ($old['title'] ?? '') !== ($a['title'] ?? '')) $shouldWrite = true;
+            }
+            if ($shouldWrite) {
                 file_put_contents($path, json_encode($a, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
             }
         }
