@@ -11,18 +11,44 @@ let allArticles = [];
 let activeFilter = 'all';
 let searchQ = '';
 
-import { API_URL, API_FALLBACK } from './config.js';
+import { API_INDEX, API_URL, API_FALLBACK, API_DATA_BASE } from './config.js';
+
+async function fetchJson(url) {
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  return res.json();
+}
 
 async function load() {
-  // Try PHP scraper API first, fallback to legacy SQLite JSON
+  // 1) Try day-split API (api/data/index.json -> per-day files)
+  try {
+    const idx = await fetchJson(API_INDEX);
+    if (idx.days && Array.isArray(idx.days) && idx.days.length > 0) {
+      // fetch all day files in parallel
+      const dayFiles = idx.days.map(d => API_DATA_BASE + d.file);
+      const dayPayloads = await Promise.all(dayFiles.map(u => fetchJson(u).catch(() => null)));
+      let merged = [];
+      let latestGenerated = idx.generated_at;
+      for (const p of dayPayloads) if (p && p.articles) merged = merged.concat(p.articles);
+      // sort by published_at DESC to keep global order
+      merged.sort((a,b) => new Date(b.published_at) - new Date(a.published_at));
+      if (merged.length === 0) throw new Error('empty day files');
+      allArticles = merged;
+      els.generated.textContent = latestGenerated ? `Updated: ${new Date(latestGenerated).toLocaleString()}` : '';
+      els.meta.textContent = `${allArticles.length} articles · ${idx.days.length} days · split by day`;
+      render();
+      return;
+    }
+  } catch (e) {
+    console.warn('day-split load failed, falling back', e.message);
+  }
+
+  // 2) Fallback: legacy aggregated JSON
   const urls = [API_URL, API_FALLBACK, './data/articles.json'];
   let lastErr = null;
   for (const url of urls) {
     try {
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-      const data = await res.json();
-      // accept both {articles:[]} and [...] and single object
+      const data = await fetchJson(url);
       if (Array.isArray(data)) allArticles = data;
       else if (data.articles) allArticles = data.articles;
       else if (data.slug) allArticles = [data];
@@ -58,12 +84,14 @@ function filtered() {
 
 function cardHtml(a) {
   const date = new Date(a.published_at).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+  // SEO: static HTML at /articles/<slug>/ for crawlers, JS intercepts for SPA
+  const staticHref = `articles/${a.slug}/`;
   return `
   <article class="card">
-    <a href="#/article/${a.slug}"><img src="${a.image_url || ''}" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+    <a href="${staticHref}" data-slug="${a.slug}" class="card-link"><img src="${a.image_url || ''}" alt="" loading="lazy" onerror="this.style.display='none'"></a>
     <div class="card-body">
       <div class="badge">${escapeHtml(a.category)}</div>
-      <h2><a href="#/article/${a.slug}">${escapeHtml(a.title)}</a></h2>
+      <h2><a href="${staticHref}" data-slug="${a.slug}" class="card-link">${escapeHtml(a.title)}</a></h2>
       <p>${escapeHtml(a.excerpt || '')}</p>
       <div class="card-meta"><span>${escapeHtml(a.author || '')}</span><span>${date}</span></div>
     </div>
@@ -83,11 +111,11 @@ function render() {
     els.grid.innerHTML = '';
     els.detail.classList.remove('hidden');
     els.detail.innerHTML = `
-      <a href="#/">← Back</a>
+      <a href="#/">← Back</a> · <a href="articles/${a.slug}/" style="font-size:.85rem;color:#6b7280">static SEO version</a>
       <img src="${a.image_url || ''}" alt="" onerror="this.style.display='none'">
       <div class="badge">${escapeHtml(a.category)}</div>
       <h1>${escapeHtml(a.title)}</h1>
-      <div style="color:#6b7280;font-size:.9rem">${escapeHtml(a.author || '')} · ${new Date(a.published_at).toLocaleString()} · <a href="${a.source_url}" target="_blank" rel="noopener">source</a></div>
+      <div style="color:#6b7280;font-size:.9rem">${escapeHtml(a.author || '')} · ${new Date(a.published_at).toLocaleString()} · <a href="${a.source_url}" target="_blank" rel="noopener">source</a> · <a href="articles/${a.slug}/" rel="canonical">permalink</a></div>
       <div class="content">${a.content || ''}</div>
     `;
     window.scrollTo(0,0);
@@ -116,5 +144,15 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 els.search.addEventListener('input', e => { searchQ = e.target.value; render(); });
 window.addEventListener('hashchange', render);
+// Intercept SEO static links for SPA navigation (keeps fast JS, but crawlers follow static HTML)
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[data-slug]');
+  if (a && a.dataset.slug) {
+    // let middle-click / ctrl-click open static page normally
+    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+    e.preventDefault();
+    location.hash = `#/article/${a.dataset.slug}`;
+  }
+});
 
 load();

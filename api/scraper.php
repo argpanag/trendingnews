@@ -17,6 +17,9 @@ const HISTORY_DIR = __DIR__ . '/history';
 const OUTPUT_JSON = __DIR__ . '/data/articles.json';
 const LEGACY_JSON = __DIR__ . '/../data/articles.json';
 const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
+// SEO
+const SITE_URL = 'https://thetools.com'; // change to your domain or GitHub Pages URL (e.g. https://user.github.io/thetools.com)
+const SEO_DIR = __DIR__ . '/../articles'; // static HTML per article: articles/<slug>/index.html
 
 function fetchUrl(string $url): string {
     $ch = curl_init($url);
@@ -273,7 +276,30 @@ function extractArticleData(string $html, string $url): ?array {
 
 function loadExisting(): array {
     $existing = [];
-    // try api/data first, then legacy
+    // try per-day files first (new split), then legacy aggregated
+    if (is_dir(API_DATA_DIR)) {
+        foreach (glob(API_DATA_DIR . '/20*.json') as $path) {
+            if (basename($path) === 'index.json') continue;
+            if (basename($path) === 'articles.json') continue;
+            $j = json_decode(file_get_contents($path), true);
+            if (isset($j['articles']) && is_array($j['articles'])) {
+                foreach ($j['articles'] as $a) if (isset($a['source_url'])) $existing[$a['source_url']] = $a;
+            } elseif (isset($j['source_url'])) {
+                if (isset($j['source_url'])) $existing[$j['source_url']] = $j;
+            }
+        }
+        if (!empty($existing)) {
+            // also load history to fill gaps
+            if (is_dir(HISTORY_DIR)) {
+                foreach (glob(HISTORY_DIR.'/*.json') as $f) {
+                    $j = json_decode(file_get_contents($f), true);
+                    if (isset($j['source_url']) && !isset($existing[$j['source_url']])) $existing[$j['source_url']]=$j;
+                }
+            }
+            return $existing;
+        }
+    }
+    // fallback: try api/data/articles.json + legacy
     foreach ([OUTPUT_JSON, LEGACY_JSON] as $path) {
         if (file_exists($path)) {
             $j = json_decode(file_get_contents($path), true);
@@ -281,7 +307,6 @@ function loadExisting(): array {
                 foreach ($j['articles'] as $a) {
                     if (isset($a['source_url'])) $existing[$a['source_url']] = $a;
                 }
-                // prefer most recent file for ordering
                 if (!empty($existing)) break;
             }
         }
@@ -294,6 +319,128 @@ function loadExisting(): array {
         }
     }
     return $existing;
+}
+
+function dateKey(string $iso): string {
+    if (preg_match('/^(\d{4}-\d{2}-\d{2})/', $iso, $m)) return $m[1];
+    try { return (new DateTime($iso))->format('Y-m-d'); } catch (Throwable $e) { return date('Y-m-d'); }
+}
+
+function escHtml(string $s): string {
+    return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function buildSeoHtml(array $a): string {
+    $rawTitle = $a['title'] ?? 'Untitled';
+    $rawExcerpt = $a['excerpt'] ?? mb_substr(strip_tags($a['content'] ?? ''), 0, 155, 'UTF-8');
+    $rawExcerpt = trim(preg_replace('/\s+/', ' ', $rawExcerpt));
+    $title = escHtml($rawTitle);
+    $excerpt = escHtml($rawExcerpt);
+    $slug = $a['slug'] ?? 'unknown';
+    $url = rtrim(SITE_URL, '/') . '/articles/' . $slug . '/';
+    $urlEsc = escHtml($url);
+    $img = escHtml($a['image_url'] ?? '');
+    $author = escHtml($a['author'] ?? 'thetools.com');
+    $published = $a['published_at'] ?? date('c');
+    try { $iso = (new DateTime($published))->format('c'); } catch (Throwable $e) { $iso = $published; }
+    $isoEsc = escHtml($iso);
+    $humanDate = escHtml(date('d.m.Y H:i', strtotime($published) ?: time()));
+    $content = $a['content'] ?? ''; // already cleaned HTML, trust
+    $category = escHtml($a['category'] ?? 'general');
+    $sourceUrl = escHtml($a['source_url'] ?? '#');
+    $jsonLd = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Article',
+        'headline' => $rawTitle,
+        'description' => $rawExcerpt,
+        'image' => $a['image_url'] ? [$a['image_url']] : [],
+        'datePublished' => $iso,
+        'dateModified' => $iso,
+        'author' => ['@type'=>'Person','name'=>$a['author'] ?? 'thetools.com'],
+        'publisher' => ['@type'=>'Organization','name'=>'thetools.com','logo'=>['@type'=>'ImageObject','url'=> rtrim(SITE_URL,'/').'/css/style.css']],
+        'mainEntityOfPage' => ['@type'=>'WebPage','@id'=>$url],
+    ];
+    $jsonLdStr = json_encode($jsonLd, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
+
+    return <<<HTML
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{$title} | thetools.com</title>
+  <meta name="description" content="{$excerpt}" />
+  <link rel="canonical" href="{$urlEsc}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="el_GR" />
+  <meta property="og:title" content="{$title}" />
+  <meta property="og:description" content="{$excerpt}" />
+  <meta property="og:url" content="{$urlEsc}" />
+  <meta property="og:site_name" content="thetools.com" />
+  <meta property="og:image" content="{$img}" />
+  <meta property="article:published_time" content="{$isoEsc}" />
+  <meta property="article:author" content="{$author}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{$title}" />
+  <meta name="twitter:description" content="{$excerpt}" />
+  <meta name="twitter:image" content="{$img}" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <script type="application/ld+json">{$jsonLdStr}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="../../">thetools<span>.com</span></a>
+      <nav class="nav">
+        <a href="../../" class="filter-btn">← Αρχική</a>
+        <span class="badge">{$category}</span>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <article class="detail">
+      <a href="../../">← Πίσω</a>
+      <img src="{$img}" alt="" loading="lazy" onerror="this.style.display='none'" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin-top:12px" />
+      <div class="badge">{$category}</div>
+      <h1>{$title}</h1>
+      <div style="color:#6b7280;font-size:.9rem">{$author} · {$humanDate} · <a href="{$sourceUrl}" target="_blank" rel="noopener">πηγή</a> · <a href="{$urlEsc}">μόνιμος σύνδεσμος</a></div>
+      <div class="content">{$content}</div>
+      <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
+      <p style="color:#6b7280;font-size:.85rem">Άρθρο από <a href="{$sourceUrl}" target="_blank" rel="noopener">enimerotiko.gr</a> · αρχειοθετήθηκε στο thetools.com</p>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Built with vanilla JS · PHP scraper → JSON · split by day · SEO static</p>
+      <p><a href="../../">thetools.com</a> · <a href="../../api/data/index.json">API index</a></p>
+    </div>
+  </footer>
+</body>
+</html>
+HTML;
+}
+
+function buildSitemap(array $articles, string $siteUrl): string {
+    $base = rtrim($siteUrl, '/');
+    $now = date('c');
+    $urls = [];
+    $urls[] = "  <url><loc>{$base}/</loc><lastmod>{$now}</lastmod><changefreq>hourly</changefreq><priority>1.0</priority></url>";
+    foreach ($articles as $a) {
+        $slug = $a['slug'] ?? '';
+        if (!$slug) continue;
+        $loc = $base . '/articles/' . $slug . '/';
+        $lastmod = $a['published_at'] ?? $now;
+        try { $lastmod = (new DateTime($lastmod))->format('c'); } catch (Throwable $e) {}
+        $locEsc = escHtml($loc);
+        $urls[] = "  <url><loc>{$locEsc}</loc><lastmod>{$lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>";
+    }
+    $body = implode("\n", $urls);
+    return <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{$body}
+</urlset>
+XML;
 }
 
 function main(): void {
@@ -336,15 +483,45 @@ function main(): void {
         @mkdir(HISTORY_DIR,0777,true);
         @mkdir(dirname(LEGACY_JSON),0777,true);
 
+        // Group by day
+        $byDay = [];
+        foreach ($articles as $a) {
+            $d = dateKey($a['published_at'] ?? date('c'));
+            $byDay[$d][] = $a;
+        }
+        krsort($byDay); // newest day first
+
         $payload = [
             'generated_at' => date('c'),
             'count' => count($articles),
             'articles' => $articles,
         ];
 
-        // Write api/data/articles.json
+        // Write per-day files: api/data/YYYY-MM-DD.json
+        foreach ($byDay as $date => $list) {
+            $dayPayload = [
+                'generated_at' => date('c'),
+                'date' => $date,
+                'count' => count($list),
+                'articles' => array_values($list),
+            ];
+            file_put_contents(API_DATA_DIR . "/$date.json", json_encode($dayPayload, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+        }
+
+        // Write index: api/data/index.json
+        $index = [
+            'generated_at' => date('c'),
+            'total' => count($articles),
+            'days' => array_map(fn($date) => [
+                'date' => $date,
+                'count' => count($byDay[$date]),
+                'file' => "$date.json"
+            ], array_keys($byDay)),
+        ];
+        file_put_contents(API_DATA_DIR . '/index.json', json_encode($index, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+
+        // Keep aggregated for backward compat (but now split is primary)
         file_put_contents(OUTPUT_JSON, json_encode($payload, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
-        // Write legacy for backward compat
         file_put_contents(LEGACY_JSON, json_encode($payload, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 
         // Write per-article history
@@ -356,7 +533,25 @@ function main(): void {
             }
         }
 
-        $result = ['ok'=>true,'found'=>count($urls),'new'=>$new,'skipped'=>$skipped,'total'=>count($articles),'generated_at'=>$payload['generated_at']];
+        // Generate SEO static HTML per article (full HTML, no JS needed for indexing)
+        @mkdir(SEO_DIR, 0777, true);
+        foreach ($articles as $a) {
+            $slug = $a['slug'] ?? slugify($a['title'],$a['source_url']);
+            $dir = SEO_DIR . '/' . $slug;
+            @mkdir($dir, 0777, true);
+            $html = buildSeoHtml($a);
+            file_put_contents($dir . '/index.html', $html);
+        }
+
+        // Generate sitemap.xml and robots.txt at root
+        $sitemap = buildSitemap($articles, SITE_URL);
+        file_put_contents(__DIR__ . '/../sitemap.xml', $sitemap);
+        $robots = "User-agent: *\nAllow: /\nSitemap: " . rtrim(SITE_URL,'/') . "/sitemap.xml\n";
+        if (!file_exists(__DIR__ . '/../robots.txt') || strpos(file_get_contents(__DIR__ . '/../robots.txt'), 'Sitemap:') === false) {
+            file_put_contents(__DIR__ . '/../robots.txt', $robots);
+        }
+
+        $result = ['ok'=>true,'found'=>count($urls),'new'=>$new,'skipped'=>$skipped,'total'=>count($articles),'days'=>count($byDay),'seo'=>count($articles),'generated_at'=>$payload['generated_at']];
         if ($isCli) echo json_encode($result,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)."\n";
         else echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
