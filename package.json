@@ -1,0 +1,16 @@
+{
+  "name": "thetools.com",
+  "version": "1.0.0",
+  "description": "News site - vanilla JS + SQLite + hourly cron + GitHub Pages + Cloudflare",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve . -l 3000",
+    "ingest": "node scripts/ingest.js && node scripts/export.js",
+    "export": "node scripts/export.js",
+    "db:reset": "node scripts/reset.js",
+    "mock:api": "node scripts/mock-api.js"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

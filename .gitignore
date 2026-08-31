@@ -1,0 +1,9 @@
+node_modules/
+# Keep DB for local dev but allow json to be committed for Pages
+# data/articles.db is committed by cron, but ignore locally large
+# Uncomment to ignore DB if you prefer:
+# data/articles.db
+.DS_Store
+.env
+wrangler/
+.dev.vars

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>thetools.com — News</title>
+  <meta name="description" content="Vanilla JS news site with SQLite + hourly cron. GitHub Pages + Cloudflare ready." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="#/">thetools<span>.com</span></a>
+      <nav class="nav">
+        <button data-filter="all" class="filter-btn active">All</button>
+        <button data-filter="tech" class="filter-btn">Tech</button>
+        <button data-filter="business" class="filter-btn">Business</button>
+        <button data-filter="general" class="filter-btn">General</button>
+      </nav>
+      <input id="search" type="search" placeholder="Search articles…" autocomplete="off" />
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="meta" class="meta"></div>
+    <div id="articles" class="grid"></div>
+    <article id="detail" class="detail hidden"></article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Built with vanilla JS · SQLite (node:sqlite) · GitHub Actions hourly cron · Free tier ready (Cloudflare D1 / Turso)</p>
+      <p><a href="https://github.com" target="_blank">View on GitHub Pages</a> · <span id="generated"></span></p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
