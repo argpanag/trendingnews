@@ -1,27 +1,22 @@
 {
-    "generated_at": "2026-09-03T17:40:51+00:00",
+    "generated_at": "2026-09-03T20:43:56+00:00",
     "country": "FR",
-    "total": 73,
+    "total": 82,
     "days": [
         {
             "date": "2026-09-03",
-            "count": 63,
+            "count": 71,
             "file": "2026-09-03.json"
         },
         {
             "date": "2026-09-02",
-            "count": 5,
+            "count": 7,
             "file": "2026-09-02.json"
         },
         {
             "date": "2026-09-01",
-            "count": 2,
+            "count": 3,
             "file": "2026-09-01.json"
-        },
-        {
-            "date": "2026-08-31",
-            "count": 2,
-            "file": "2026-08-31.json"
         },
         {
             "date": "2026-08-30",
