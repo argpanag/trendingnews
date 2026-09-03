@@ -1,7 +1,7 @@
 // Cloudflare Worker + D1 free-tier alternative
 // This gives you a TRUE shared SQLite (D1 = SQLite) for $0
 // Free tier: 5GB storage, 5M row reads/day, 100k row writes/day, 100k Worker requests/day
-// Deploy: wrangler d1 create thetools-db && wrangler deploy
+// Deploy: wrangler d1 create trends-online-db && wrangler deploy
 // Keep vanilla JS frontend identical: fetch('/api/articles') instead of '/data/articles.json'
 
 export default {

@@ -1,5 +1,5 @@
 {
-  "name": "thetools.com",
+  "name": "trends-online.com",
   "version": "1.0.0",
   "description": "News site - vanilla JS + SQLite + hourly cron + GitHub Pages + Cloudflare",
   "type": "module",

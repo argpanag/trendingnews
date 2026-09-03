@@ -1,4 +1,4 @@
-# thetools.com — Vanilla JS + SQLite + Hourly Cron
+# trends-online.com — Vanilla JS + SQLite + Hourly Cron
 
 Pure vanilla JS news site. GitHub Pages (static) + hourly cron that ingests your API into SQLite.
 
@@ -54,9 +54,9 @@ worker/index.js                          # optional Cloudflare D1 Worker (free)
 
 ```bash
 npm i -g wrangler
-wrangler d1 create thetools-db
+wrangler d1 create trends-online-db
 # paste id into worker/wrangler.toml
-wrangler d1 execute thetools-db --file=scripts/schema.sql
+wrangler d1 execute trends-online-db --file=scripts/schema.sql
 wrangler deploy --config worker/wrangler.toml
 # frontend: change fetch('./data/articles.json') -> fetch('https://your-worker.workers.dev/api/articles')
 ```

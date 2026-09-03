@@ -1,11 +1,11 @@
-# thetools.com - Google Trends News Site
+# trends-online.com - Google Trends News Site
 
 A Google Trends news aggregator that scrapes trending articles from 47 countries and generates static HTML pages for SEO indexing.
 
 ## Architecture
 
 ```
-thetools.com/
+trends-online.com/
 ├── index.html                    # Main page (auto-generated)
 ├── index-{2-5}.html              # Paginated pages
 ├── articles/{slug}/index.html    # 113+ article pages
@@ -57,7 +57,7 @@ thetools.com/
 </head>
 <body>
   <header class="site-header">
-    <a class="logo" href="../../">thetools<span>.com</span></a>
+    <a class="logo" href="../../">trends-online<span>.com</span></a>
     <nav class="nav">
       <a href="../../" class="filter-btn">← Αρχική</a>
       <span class="badge">{category}</span>

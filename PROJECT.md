@@ -1,4 +1,4 @@
-# thetools.com — Project Documentation
+# trends-online.com — Project Documentation
 
 A fully static news site built with **PHP scrapers → JSON → static HTML pages**.
 No database server, no frameworks, no build step. Every article becomes its own
@@ -38,7 +38,7 @@ rebuilds the static home page that links to every article.
 ## Directory structure
 
 ```
-thetools.com/
+trends-online.com/
   index.html                     # static home (rebuilt): grid of all article links
   sitemap.xml                    # all article URLs (rebuilt)
   robots.txt                     # Allow: / + Sitemap URL
@@ -181,12 +181,12 @@ Run the scrapers hourly, then rebuild the index:
 
 ```bash
 # Unix cron
-0 * * * * php /path/to/thetools.com/api/scraper.php  >> /var/log/thetools-scrape.log 2>&1
-30 * * * * php /path/to/thetools.com/api/trends_scraper.php >> /var/log/thetools-trends.log 2>&1
-45 * * * * php /path/to/thetools.com/api/build_index.php >> /var/log/thetools-build.log 2>&1
+0 * * * * php /path/to/trends-online.com/api/scraper.php  >> /var/log/trends-online-scrape.log 2>&1
+30 * * * * php /path/to/trends-online.com/api/trends_scraper.php >> /var/log/trends-online-trends.log 2>&1
+45 * * * * php /path/to/trends-online.com/api/build_index.php >> /var/log/trends-online-build.log 2>&1
 
 # Windows (Task Scheduler)
-C:\xampp2024\php\php.exe C:\...\thetools.com\api\scraper.php
+C:\xampp2024\php\php.exe C:\...\trends-online.com\api\scraper.php
 ```
 
 Each scraper already invokes `buildIndex()` when it finishes, so the extra
@@ -207,7 +207,7 @@ For local development on XAMPP:
 php api/scraper.php --force
 php api/trends_scraper.php --force
 php api/build_index.php
-# open http://localhost/thetools.com/index.html
+# open http://localhost/trends-online.com/index.html
 ```
 
 ---

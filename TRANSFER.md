@@ -1,13 +1,13 @@
-# Transfer Guide — thetools.com
+# Transfer Guide — trends-online.com
 
 How to move this project to another machine, USB, or new Git repo without breaking the SQLite + cron setup.
 
 ## 1. What to copy
 
-Copy the **entire folder** `thetools.com/` as-is. Required:
+Copy the **entire folder** `trends-online.com/` as-is. Required:
 
 ```
-thetools.com/
+trends-online.com/
   index.html
   css/
   js/
@@ -48,7 +48,7 @@ No `better-sqlite3`, no Python, no WAMP/XAMPP needed. Pure Node + vanilla JS.
 ## 3. Setup after transfer (30 seconds)
 
 ```bash
-cd thetools.com
+cd trends-online.com
 
 # (optional) if you copied via git clone and have package lock:
 npm install   # no deps currently, but needed if you add `serve`
@@ -85,12 +85,12 @@ git init
 git add .
 git commit -m "initial: vanilla JS + SQLite + hourly cron"
 git branch -M main
-git remote add origin https://github.com/YOURUSER/thetools.com.git
+git remote add origin https://github.com/YOURUSER/trends-online.com.git
 git push -u origin main
 
 # on new machine
-git clone https://github.com/YOURUSER/thetools.com.git
-cd thetools.com
+git clone https://github.com/YOURUSER/trends-online.com.git
+cd trends-online.com
 node scripts/export.js  # regenerate json if needed
 ```
 

@@ -16,7 +16,7 @@ const DEFAULT_COUNTRY = 'US';
 const TRENDS_DATA_DIR = __DIR__ . '/data/trends';
 const TRENDS_HISTORY_DIR = __DIR__ . '/history_trends';
 const TRENDS_SEO_DIR = __DIR__ . '/../articles';
-const SITE_URL = 'https://thetools.com';
+const SITE_URL = 'https://trends-online.com';
 const MAX_TRENDS = 15;
 const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 
@@ -88,6 +88,17 @@ function slugify(string $title, string $url): string {
 
 function esc(string $s): string {
     return htmlspecialchars($s ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function isLatinText(string $text): bool {
+    $text = trim($text);
+    if (strlen($text) === 0) return false;
+    $cleaned = preg_replace('/[\s\d\p{P}\p{S}\p{Sc}]+/u', '', $text);
+    if (strlen($cleaned) === 0) return true;
+    $latin = preg_match_all('/[\p{Latin}\p{Greek}\p{Common}]/u', $cleaned);
+    $total = preg_match_all('/./u', $cleaned);
+    if ($total === 0) return true;
+    return ($latin / $total) > 0.6;
 }
 
 function cleanContent(string $html): string {
@@ -210,6 +221,7 @@ function extractTrends(string $rssUrl): array {
 
     foreach ($items as $it) {
         $title = $xp->evaluate('string(title)', $it);
+        if (!isLatinText($title)) continue;
         $traffic = $xp->evaluate('string(ht:approx_traffic)', $it);
         $pub = $xp->evaluate('string(pubDate)', $it);
         $pic = $xp->evaluate('string(ht:picture)', $it);
@@ -240,6 +252,7 @@ function extractArticle(string $html, string $url): ?array {
     $t = $xp->query('//meta[@property="og:title"]/@content')->item(0) ?? $xp->query('//title')->item(0);
     $title = $t ? trim($t->nodeValue ?? $t->textContent) : '';
     if (!$title) return null;
+    if (!isLatinText($title)) return null;
 
     $ogImg = $xp->query('//meta[@property="og:image"]/@content')->item(0);
     $img = $ogImg ? trim($ogImg->nodeValue) : '';
@@ -311,7 +324,7 @@ function buildSeoHtml(array $a, string $country): string {
         'author' => ['@type' => 'Person', 'name' => $author],
         'publisher' => [
             '@type' => 'Organization',
-            'name' => 'thetools.com',
+            'name' => 'trends-online.com',
             'logo' => ['@type' => 'ImageObject', 'url' => rtrim(SITE_URL, '/') . '/css/style.css']
         ],
         'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $fullUrl],
@@ -327,7 +340,7 @@ function buildSeoHtml(array $a, string $country): string {
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{$title} | thetools.com</title>
+  <title>{$title} | trends-online.com</title>
   <meta name="description" content="{$excerpt}" />
   <link rel="canonical" href="{$fullUrl}" />
   <meta property="og:type" content="article" />
@@ -335,7 +348,7 @@ function buildSeoHtml(array $a, string $country): string {
   <meta property="og:title" content="{$title}" />
   <meta property="og:description" content="{$excerpt}" />
   <meta property="og:url" content="{$fullUrl}" />
-  <meta property="og:site_name" content="thetools.com" />
+  <meta property="og:site_name" content="trends-online.com" />
   <meta property="og:image" content="{$img}" />
   <meta property="article:published_time" content="{$iso}" />
   <meta property="article:author" content="{$author}" />
@@ -349,9 +362,9 @@ function buildSeoHtml(array $a, string $country): string {
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="logo" href="../../">thetools<span>.com</span></a>
+      <a class="logo" href="../../">trends-online<span>.com</span></a>
       <nav class="nav">
-        <a href="../../" class="filter-btn">← Αρχική</a>
+        <a href="../../" class="filter-btn">← Home</a>
         <span class="badge">{$category}</span>
         <span class="badge">{$country}</span>
       </nav>
@@ -359,20 +372,20 @@ function buildSeoHtml(array $a, string $country): string {
   </header>
   <main class="wrap">
     <article class="detail">
-      <a href="../../">← Πίσω</a>
+      <a href="../../">← Back</a>
       <img src="{$img}" alt="" loading="lazy" onerror="this.style.display='none'" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin-top:12px" />
       <div class="badge">{$category}</div>
       <h1>{$title}</h1>
-      <div style="color:#6b7280;font-size:.9rem">{$author} · {$humanDate} · <a href="{$sourceUrl}" target="_blank" rel="noopener">πηγή</a> · <a href="{$fullUrl}">μόνιμος σύνδεσμος</a></div>
+      <div style="color:#6b7280;font-size:.9rem">{$author} · {$humanDate} · <a href="{$sourceUrl}" target="_blank" rel="noopener">source</a> · <a href="{$fullUrl}">permalink</a></div>
       <div class="content">{$content}</div>
       <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
-      <p style="color:#6b7280;font-size:.85rem">Source: <a href="{$sourceUrl}" target="_blank" rel="noopener">original</a> · archived on thetools.com · Trends: {$country}</p>
+      <p style="color:#6b7280;font-size:.85rem">Source: <a href="{$sourceUrl}" target="_blank" rel="noopener">original</a> · archived on trends-online.com · Trends: {$country}</p>
     </article>
   </main>
   <footer class="site-footer">
     <div class="wrap">
       <p>Built with PHP scraper → JSON · SEO static HTML · Trends: {$country}</p>
-      <p><a href="../../">thetools.com</a> · <a href="../../api/data/index.json">API index</a></p>
+      <p><a href="../../">trends-online.com</a> · <a href="../../api/data/index.json">API index</a></p>
     </div>
   </footer>
 </body>

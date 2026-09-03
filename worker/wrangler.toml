@@ -1,11 +1,11 @@
-name = "thetools-api"
+name = "trends-online-api"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
-# D1 free tier - create with: npx wrangler d1 create thetools-db
+# D1 free tier - create with: npx wrangler d1 create trends-online-db
 # [[d1_databases]]
 # binding = "DB"
-# database_name = "thetools-db"
+# database_name = "trends-online-db"
 # database_id = "REPLACE_WITH_D1_ID"
 
 [vars]
