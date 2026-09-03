@@ -37,6 +37,14 @@ jobs:
             sleep 3
           done
 
+      - name: Run trends scraper for tier-3 countries
+        run: |
+          for country in PL PT CH AT BE DK NO FI IE NZ SG HK TW TH VN ID MY PH CZ RO HU BG HR SK SI LT LV EE; do
+            echo "=== Scraping $country ==="
+            php api/trends_scraper.php --country=$country || true
+            sleep 2
+          done
+
       - name: Rebuild index and articles
         run: |
           php api/build_index.php
