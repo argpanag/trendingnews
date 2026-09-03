@@ -1,14 +1,14 @@
 <?php
 /**
- * Orchestrator: scrape trends + auto-rebuild index & articles.
+ * Orchestrator: scrape trends + auto-rebuild + push to GitHub.
  *
  * Usage via browser/URL:
- *   /api/run.php?all=true           Scrape all countries + rebuild
- *   /api/run.php?tier=1             Scrape tier-1 + rebuild
- *   /api/run.php?tier=2             Scrape tier-2 + rebuild
- *   /api/run.php?tier=3             Scrape tier-3 + rebuild
- *   /api/run.php?country=US         Scrape single country + rebuild
- *   /api/run.php?all=true&force     Force reload existing data
+ *   /api/run.php?all=true           Scrape all countries + rebuild + push
+ *   /api/run.php?tier=1             Scrape tier-1 + rebuild + push
+ *   /api/run.php?tier=2             Scrape tier-2 + rebuild + push
+ *   /api/run.php?tier=3             Scrape tier-3 + rebuild + push
+ *   /api/run.php?country=US         Scrape single country + rebuild + push
+ *   /api/run.php?all=true&force     Force reload existing data + push
  */
 declare(strict_types=1);
 
@@ -56,6 +56,33 @@ function runBuild(): array {
     $rebuildOk = $exitCode === 0;
 
     return ['index' => $indexOk, 'articles' => $rebuildOk];
+}
+
+function pushToGithub(): array {
+    $root = __DIR__ . '/..';
+    $commands = [
+        'git add -A',
+        'git diff --cached --quiet || git commit -m "chore: manual update ' . date('Y-m-d\TH:i:s') . '"',
+        'git push',
+    ];
+
+    $output = [];
+    $exitCode = 0;
+    $committed = false;
+
+    foreach ($commands as $cmd) {
+        $output = [];
+        $exitCode = 0;
+        exec("cd " . escapeshellarg($root) . " && {$cmd} 2>&1", $output, $exitCode);
+        if ($exitCode !== 0) {
+            return ['ok' => false, 'error' => implode("\n", $output)];
+        }
+        if (str_starts_with($cmd, 'git diff')) {
+            $committed = !str_contains(implode($output), 'nothing to commit');
+        }
+    }
+
+    return ['ok' => true, 'committed' => $committed];
 }
 
 function main(): void {
@@ -129,6 +156,7 @@ function main(): void {
     }
 
     $build = runBuild();
+    $push = pushToGithub();
     $elapsed = time() - $startTime;
 
     $response = [
@@ -142,6 +170,7 @@ function main(): void {
         'skipped' => $totalSkipped,
         'updated' => $totalUpdated,
         'rebuild' => $build,
+        'push' => $push,
         'errors' => $errors,
         'elapsed_seconds' => $elapsed,
     ];

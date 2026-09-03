@@ -23,6 +23,27 @@ function getPerPage(): int { return $GLOBALS['config']['articles_per_page']; }
 
 function escBuild(string $s): string { return htmlspecialchars($s, ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8'); }
 
+function analyticsHead(): string {
+    global $config;
+    $ga = $config['google_analytics_id'] ?? '';
+    $clarity = $config['microsoft_clarity_id'] ?? '';
+    $html = '';
+    if ($ga) {
+        $html .= "  <!-- Google Analytics -->\n";
+        $html .= "  <script async src=\"https://www.googletagmanager.com/gtag/js?id=" . escBuild($ga) . "\"></script>\n";
+        $html .= "  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','" . escBuild($ga) . "');</script>\n";
+    }
+    if ($clarity) {
+        $html .= "  <!-- Microsoft Clarity -->\n";
+        $html .= "  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,\"clarity\",\"script\",\"" . escBuild($clarity) . "\");</script>\n";
+    }
+    return $html;
+}
+
+function footerLinks(string $sep = ' · '): string {
+    return "<a href=\"privacy.html\">Privacy Policy</a>{$sep}<a href=\"terms.html\">Terms</a>{$sep}<a href=\"about.html\">About</a>{$sep}<a href=\"contact.html\">Contact</a>";
+}
+
 function loadAllArticles(): array {
     $articles = [];
     // primary day-split
@@ -179,6 +200,7 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
   <meta property="og:title" content="Archive: {$humanDate} | trends-online.com" />
   <meta property="og:description" content="{$totalArticles} articles from {$humanDate}" />
   <link rel="stylesheet" href="../../css/style.css" />
+" . analyticsHead() . "
 </head>
 <body>
   <header class="site-header">
@@ -202,7 +224,8 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p><a href="../../">trends-online.com</a> · <a href="../">All archives</a> · <span>{$generated}</span></p>
+      <p><a href="../../">trends-online.com</a> · <a href="../">All archives</a></p>
+      <p>" . footerLinks() . " · <span>{$generated}</span></p>
     </div>
   </footer>
 </body>
@@ -246,6 +269,7 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
     .archive-date { font-weight:600; font-size:1.05rem; }
     .archive-count { color:var(--muted); font-size:.9rem; }
   </style>
+" . analyticsHead() . "
 </head>
 <body>
   <header class="site-header">
@@ -266,7 +290,8 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p><a href="../">trends-online.com</a> · <span>{$generated}</span></p>
+      <p><a href="../">trends-online.com</a></p>
+      <p>" . footerLinks() . " · <span>{$generated}</span></p>
     </div>
   </footer>
 </body>
@@ -351,14 +376,15 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
   <meta property="og:title" content="{$countryName} — trends-online.com" />
   <meta property="og:description" content="{$totalArticles} articles from {$countryName}" />
   <link rel="stylesheet" href="css/style.css" />
+" . analyticsHead() . "
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap">
-      <a class="logo" href="./">trends-online<span>.com</span></a>
-      <nav class="nav">
-        <a href="./" class="filter-btn">All</a>
-        <a href="archive/" class="filter-btn">Archive</a>
+  <header class=\"site-header\">
+    <div class=\"wrap\">
+      <a class=\"logo\" href=\"./\">trends-online<span>.com</span></a>
+      <nav class=\"nav\">
+        <a href=\"./\" class=\"filter-btn\">All</a>
+        <a href=\"archive/\" class=\"filter-btn\">Archive</a>
 {$countryLinks}      </nav>
     </div>
   </header>
@@ -371,7 +397,8 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p><a href="./">trends-online.com</a> · <a href="archive/">Archive</a> · <span>{$generated}</span></p>
+      <p><a href="./">trends-online.com</a> · <a href="archive/">Archive</a></p>
+      <p>" . footerLinks() . " · <span>{$generated}</span></p>
     </div>
   </footer>
 </body>
@@ -458,6 +485,7 @@ function buildIndexHtml(array $articles, int $page = 1): string {
   <meta property="og:title" content="trends-online.com — News" />
   <meta property="og:description" content="{$totalArticles} articles — static HTML for fast indexing" />
   <link rel="stylesheet" href="css/style.css" />
+" . analyticsHead() . "
 </head>
 <body>
   <header class="site-header">
@@ -480,8 +508,8 @@ function buildIndexHtml(array $articles, int $page = 1): string {
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Built with PHP scraper → JSON · split by day · SEO static HTML per article · {$totalArticles} pages</p>
-      <p><a href="sitemap.xml">Sitemap</a> · <a href="robots.txt">Robots</a> · <span id="generated2">{$generated}</span></p>
+      <p><a href="sitemap.xml">Sitemap</a> · <a href="robots.txt">Robots</a></p>
+      <p>" . footerLinks() . " · <span id=\"generated2\">{$generated}</span></p>
     </div>
   </footer>
 </body>
@@ -547,6 +575,13 @@ function buildIndex(): int {
     ensureNoCacheHtaccess();
     buildArchives($articles);
     buildCountryPages($articles);
+
+    // Inject analytics into static pages
+    $analyticsScript = __DIR__ . '/inject_analytics.php';
+    if (file_exists($analyticsScript)) {
+        exec("php " . escapeshellarg($analyticsScript) . " 2>&1");
+    }
+
     return $total;
 }
 

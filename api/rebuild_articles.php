@@ -13,6 +13,29 @@ function esc(string $s): string {
     return htmlspecialchars($s ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+$config = require __DIR__ . '/../config.php';
+
+function analyticsHead(): string {
+    global $config;
+    $ga = $config['google_analytics_id'] ?? '';
+    $clarity = $config['microsoft_clarity_id'] ?? '';
+    $html = '';
+    if ($ga) {
+        $html .= "  <!-- Google Analytics -->\n";
+        $html .= "  <script async src=\"https://www.googletagmanager.com/gtag/js?id=" . esc($ga) . "\"></script>\n";
+        $html .= "  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','" . esc($ga) . "');</script>\n";
+    }
+    if ($clarity) {
+        $html .= "  <!-- Microsoft Clarity -->\n";
+        $html .= "  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,\"clarity\",\"script\",\"" . esc($clarity) . "\");</script>\n";
+    }
+    return $html;
+}
+
+function footerLinks(): string {
+    return "<a href=\"../../privacy.html\">Privacy Policy</a> · <a href=\"../../terms.html\">Terms</a> · <a href=\"../../about.html\">About</a> · <a href=\"../../contact.html\">Contact</a>";
+}
+
 function loadAllArticles(): array {
     $articles = [];
     
@@ -125,7 +148,8 @@ function buildArticleHtml(array $a): string {
   <meta name="twitter:description" content="{$excerpt}" />
   <meta name="twitter:image" content="{$img}" />
   <link rel="stylesheet" href="../../css/style.css" />
-  <script type="application/ld+json">{$jsonLdStr}</script>
+" . analyticsHead() . "
+  <script type=\"application/ld+json\">{$jsonLdStr}</script>
 </head>
 <body>
   <header class="site-header">
@@ -154,8 +178,8 @@ function buildArticleHtml(array $a): string {
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Built with PHP scraper → JSON · SEO static HTML</p>
-      <p><a href="../../">trends-online.com</a> · <a href="../../api/data/index.json">API index</a></p>
+      <p><a href="../../">trends-online.com</a> · <a href="../../archive/">Archive</a></p>
+      <p>" . footerLinks() . "</p>
     </div>
   </footer>
 </body>

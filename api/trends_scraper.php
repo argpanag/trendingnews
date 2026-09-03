@@ -20,6 +20,29 @@ const SITE_URL = 'https://trends-online.com';
 const MAX_TRENDS = 15;
 const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 
+$config = require __DIR__ . '/../config.php';
+
+function analyticsHead(): string {
+    global $config;
+    $ga = $config['google_analytics_id'] ?? '';
+    $clarity = $config['microsoft_clarity_id'] ?? '';
+    $html = '';
+    if ($ga) {
+        $html .= "  <!-- Google Analytics -->\n";
+        $html .= "  <script async src=\"https://www.googletagmanager.com/gtag/js?id=" . htmlspecialchars($ga) . "\"></script>\n";
+        $html .= "  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','" . htmlspecialchars($ga) . "');</script>\n";
+    }
+    if ($clarity) {
+        $html .= "  <!-- Microsoft Clarity -->\n";
+        $html .= "  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src=\"https://www.clarity.ms/tag/\"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,\"clarity\",\"script\",\"" . htmlspecialchars($clarity) . "\");</script>\n";
+    }
+    return $html;
+}
+
+function footerLinks(): string {
+    return "<a href=\"../../privacy.html\">Privacy Policy</a> · <a href=\"../../terms.html\">Terms</a> · <a href=\"../../about.html\">About</a> · <a href=\"../../contact.html\">Contact</a>";
+}
+
 function getCountry(): string {
     if (php_sapi_name() === 'cli') {
         global $argv;
@@ -357,7 +380,8 @@ function buildSeoHtml(array $a, string $country): string {
   <meta name="twitter:description" content="{$excerpt}" />
   <meta name="twitter:image" content="{$img}" />
   <link rel="stylesheet" href="../../css/style.css" />
-  <script type="application/ld+json">{$jsonLdStr}</script>
+" . analyticsHead() . "
+  <script type=\"application/ld+json\">{$jsonLdStr}</script>
 </head>
 <body>
   <header class="site-header">
@@ -384,8 +408,8 @@ function buildSeoHtml(array $a, string $country): string {
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p>Built with PHP scraper → JSON · SEO static HTML · Trends: {$country}</p>
-      <p><a href="../../">trends-online.com</a> · <a href="../../api/data/index.json">API index</a></p>
+      <p><a href="../../">trends-online.com</a> · <a href="../../archive/">Archive</a></p>
+      <p>" . footerLinks() . " · Trends: {$country}</p>
     </div>
   </footer>
 </body>

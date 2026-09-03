@@ -23,6 +23,10 @@ return [
     'allowed_scripts' => ['Latin', 'Greek', 'Common'],
     'latin_threshold' => 0.6,
 
+    // Analytics — leave empty to disable
+    'google_analytics_id' => '',   // e.g. 'G-XXXXXXXXXX'
+    'microsoft_clarity_id' => '',  // e.g. 'xxxxxxxxxx'
+
     // Tier definitions
     'tiers' => [
         1 => ['US', 'GB', 'DE', 'FR', 'JP'],

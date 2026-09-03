@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | trends-online.com</title>
+  <meta name="description" content="Contact trends-online.com. Get in touch with us." />
+  <link rel="canonical" href="https://trends-online.com/contact.html" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- ANALYTICS_PLACEHOLDER: Run build_index.php to inject analytics -->
+  <style>
+    .contact-form { margin-top:24px; }
+    .form-group { margin-bottom:18px; }
+    .form-group label { display:block; font-weight:600; margin-bottom:6px; }
+    .form-group input, .form-group textarea {
+      width:100%; padding:12px; border:1px solid var(--border);
+      border-radius:var(--radius); font-size:1rem; font-family:inherit;
+      background:var(--bg); color:var(--text);
+    }
+    .form-group textarea { min-height:150px; resize:vertical; }
+    .submit-btn {
+      background:var(--accent); color:#fff; border:none; padding:14px 28px;
+      border-radius:var(--radius); font-size:1rem; cursor:pointer;
+      font-weight:600;
+    }
+    .submit-btn:hover { opacity:0.9; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="./">trends-online<span>.com</span></a>
+      <nav class="nav">
+        <a href="./" class="filter-btn">← Home</a>
+        <a href="about.html" class="filter-btn">About</a>
+        <a href="privacy.html" class="filter-btn">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" style="max-width:760px">
+    <h1 style="margin:18px 0 8px">Contact Us</h1>
+    <p class="meta">We'd love to hear from you</p>
+
+    <div style="line-height:1.8; margin-top:24px">
+      <h2>Get In Touch</h2>
+      <p>Have a question, suggestion, or want to report an issue? Use the form below or email us directly.</p>
+
+      <p><strong>Email:</strong> contact@trends-online.com</p>
+
+      <h2>Send Us a Message</h2>
+      <form class="contact-form" action="mailto:contact@trends-online.com" method="post" enctype="text/plain">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="john@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="What is this about?" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+
+      <h2 style="margin-top:36px">Response Time</h2>
+      <p>We aim to respond to all inquiries within 48 hours. For urgent matters, please mark your subject line as "URGENT".</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><a href="./">trends-online.com</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About</a> · <a href="contact.html">Contact</a></p>
+    </div>
+  </footer>
+</body>
+</html>
