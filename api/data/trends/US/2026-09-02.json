@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-09-03T20:43:06+00:00",
+    "generated_at": "2026-09-03T23:04:35+00:00",
     "date": "2026-09-02",
     "country": "US",
-    "count": 10,
+    "count": 11,
     "articles": [
         {
             "title": "The FPS Games Show Start Times and How to Watch (Countdown Timer)",
@@ -30,6 +30,20 @@
             "published_at": "2026-09-02T22:03:25.000Z",
             "trend": true,
             "trend_title": "Epstein survivors urge billionaire Leon Black to cooperate with House panel",
+            "country": "US"
+        },
+        {
+            "title": "Duquesne Light reports over 6K without power as extreme heat, storms roll through area",
+            "slug": "duquesne-light-reports-over-6k-without-power-as-extreme-heat",
+            "excerpt": "Over 3,000 people in Allegheny County remain without power as temperatures reach above 90 degrees on Wednesday.",
+            "content": "<p data-node-id=\"0\">Over 10,000 people in Allegheny County remain without power, as temperatures reach above 90 degrees and potential storms are expected to roll through the area on Wednesday. </p><p data-node-id=\"1\"><strong><em>Watch previous weather report in the playfinder above </em></strong></p><p data-node-id=\"2\">According to Duquesne Light Company's website, more than 3,000 customers in Allegheny County remained without power as of 8 p.m. </p><p data-node-id=\"3\">Many of the outages appeared to be reported in Bellevue, Avalon, Ben Avon, Emsworth, Ohio Township, Ross Township, and McCandless. Multiple other areas are included. </p><p data-node-id=\"4\">DLC said on its website the outage was due to a substation issue. </p><p data-node-id=\"5\">Pittsburgh's Action News 4 has reached out to the power company for further details. </p><p data-node-id=\"6\">Stay up to date with power restoration by visiting Duquesne Light's website: <strong><em><a href=\"https://duquesnelight.com/outages-safety/current-outages\" target=\"_blank\" rel=\"noopener noreferrer\">Outage Map </a></em></strong></p><p data-node-id=\"7\"><strong><em><a href=\"https://www.wtae.com/article/get-pittsburgh-s-action-news-4-on-the-go-wtae/44045498\" target=\"_blank\" rel=\"noopener noreferrer\">Download the WTAE app</a></em></strong> <em>to stay connected with breaking news.</em> <strong><em><a href=\"https://www.wtae.com/subscribe\" target=\"_blank\" rel=\"noopener noreferrer\">Sign up for our email newsletters</a></em></strong><em> to get breaking news in your inbox.</em></p><h2 class=\"article-footer--header\" data-testid=\"article-top-picks-title\">Top Picks</h2>",
+            "category": "general",
+            "image_url": "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/duquesnelight-68a691a8d173d.jpg?crop=1.00xw%3A1.00xh%3B0%2C0&resize=1200%3A*",
+            "source_url": "https://www.wtae.com/article/duquesne-light-power-outage-allegheny-county-wednesday-sept-1/73597806",
+            "author": "TheTools",
+            "published_at": "2026-09-02T21:56:00Z",
+            "trend": true,
+            "trend_title": "Duquesne Light reports over 6K without power as extreme heat, storms roll through area",
             "country": "US"
         },
         {
