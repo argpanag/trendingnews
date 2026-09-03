@@ -5,13 +5,10 @@ wrangler/
 .dev.vars
 
 # Local-only files (not needed on GitHub)
-api/data/
+api/
 data/
 config.php
-fix_articles.php
-cleanup_nonlatin.php
-audit_articles.ps1
-check_data.php
+*.ps1
 scripts/
 worker/
 package.json
@@ -19,3 +16,7 @@ package-lock.json
 PROJECT.md
 TRANSFER.md
 CHANGELOG.md
+audit_articles.ps1
+fix_articles.php
+cleanup_nonlatin.php
+check_data.php
