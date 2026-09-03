@@ -353,6 +353,8 @@ function buildSeoHtml(array $a, string $country): string {
         'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $fullUrl],
     ];
     $jsonLdStr = json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    $analytics = analyticsHead();
+    $footer = footerLinks();
 
     return <<<HTML
 <!DOCTYPE html>
@@ -380,7 +382,7 @@ function buildSeoHtml(array $a, string $country): string {
   <meta name="twitter:description" content="{$excerpt}" />
   <meta name="twitter:image" content="{$img}" />
   <link rel="stylesheet" href="../../css/style.css" />
-" . analyticsHead() . "
+{$analytics}
   <script type=\"application/ld+json\">{$jsonLdStr}</script>
 </head>
 <body>
@@ -409,7 +411,7 @@ function buildSeoHtml(array $a, string $country): string {
   <footer class="site-footer">
     <div class="wrap">
       <p><a href="../../">trends-online.com</a> · <a href="../../archive/">Archive</a></p>
-      <p>" . footerLinks() . " · Trends: {$country}</p>
+      <p>{$footer} · Trends: {$country}</p>
     </div>
   </footer>
 </body>

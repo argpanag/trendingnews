@@ -101,6 +101,8 @@ function buildArticleHtml(array $a): string {
     $category = esc($a['category'] ?? 'general');
     $sourceUrl = esc($a['source_url'] ?? '#');
     $country = esc($a['country'] ?? '');
+    $footer = footerLinks();
+    $analytics = analyticsHead();
     
     $jsonLd = [
         '@context' => 'https://schema.org',
@@ -148,7 +150,7 @@ function buildArticleHtml(array $a): string {
   <meta name="twitter:description" content="{$excerpt}" />
   <meta name="twitter:image" content="{$img}" />
   <link rel="stylesheet" href="../../css/style.css" />
-" . analyticsHead() . "
+  {$analytics}
   <script type=\"application/ld+json\">{$jsonLdStr}</script>
 </head>
 <body>
@@ -179,7 +181,7 @@ function buildArticleHtml(array $a): string {
   <footer class="site-footer">
     <div class="wrap">
       <p><a href="../../">trends-online.com</a> · <a href="../../archive/">Archive</a></p>
-      <p>" . footerLinks() . "</p>
+      <p>{$footer}</p>
     </div>
   </footer>
 </body>

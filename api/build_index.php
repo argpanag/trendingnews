@@ -183,6 +183,8 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
         $nav .= "<a href=\"../{$nextDate}/\" class=\"pag-btn\">{$nextDate} →</a>";
     }
     $nav .= '</div>';
+    $analytics = analyticsHead();
+    $footer = footerLinks();
 
     return <<<HTML
 <!DOCTYPE html>
@@ -200,7 +202,7 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
   <meta property="og:title" content="Archive: {$humanDate} | trends-online.com" />
   <meta property="og:description" content="{$totalArticles} articles from {$humanDate}" />
   <link rel="stylesheet" href="../../css/style.css" />
-" . analyticsHead() . "
+  {$analytics}
 </head>
 <body>
   <header class="site-header">
@@ -225,7 +227,7 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
   <footer class="site-footer">
     <div class="wrap">
       <p><a href="../../">trends-online.com</a> · <a href="../">All archives</a></p>
-      <p>" . footerLinks() . " · <span>{$generated}</span></p>
+      <p>{$footer} · <span>{$generated}</span></p>
     </div>
   </footer>
 </body>
@@ -245,6 +247,8 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
         $humanDate = date('d M Y', strtotime($date));
         $list .= "      <a href=\"{$date}/\" class=\"archive-day\"><span class=\"archive-date\">{$humanDate}</span><span class=\"archive-count\">{$count} articles</span></a>\n";
     }
+    $analytics = analyticsHead();
+    $footer = footerLinks();
 
     return <<<HTML
 <!DOCTYPE html>
@@ -269,7 +273,7 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
     .archive-date { font-weight:600; font-size:1.05rem; }
     .archive-count { color:var(--muted); font-size:.9rem; }
   </style>
-" . analyticsHead() . "
+{$analytics}
 </head>
 <body>
   <header class="site-header">
@@ -291,7 +295,7 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
   <footer class="site-footer">
     <div class="wrap">
       <p><a href="../">trends-online.com</a></p>
-      <p>" . footerLinks() . " · <span>{$generated}</span></p>
+      <p>{$footer} · <span>{$generated}</span></p>
     </div>
   </footer>
 </body>
@@ -359,6 +363,8 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
         $active = $c === $country ? ' active' : '';
         $countryLinks .= "        <a href=\"index-{$cLower}.html\" class=\"filter-btn{$active}\">{$cName}</a>\n";
     }
+    $analytics = analyticsHead();
+    $footer = footerLinks();
 
     return <<<HTML
 <!DOCTYPE html>
@@ -376,7 +382,7 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
   <meta property="og:title" content="{$countryName} — trends-online.com" />
   <meta property="og:description" content="{$totalArticles} articles from {$countryName}" />
   <link rel="stylesheet" href="css/style.css" />
-" . analyticsHead() . "
+{$analytics}
 </head>
 <body>
   <header class=\"site-header\">
@@ -398,7 +404,7 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
   <footer class="site-footer">
     <div class="wrap">
       <p><a href="./">trends-online.com</a> · <a href="archive/">Archive</a></p>
-      <p>" . footerLinks() . " · <span>{$generated}</span></p>
+      <p>{$footer} · <span>{$generated}</span></p>
     </div>
   </footer>
 </body>
@@ -468,6 +474,8 @@ function buildIndexHtml(array $articles, int $page = 1): string {
         }
         $pagination .= '</div>';
     }
+    $analytics = analyticsHead();
+    $footer = footerLinks();
 
     return <<<HTML
 <!DOCTYPE html>
@@ -485,7 +493,7 @@ function buildIndexHtml(array $articles, int $page = 1): string {
   <meta property="og:title" content="trends-online.com — News" />
   <meta property="og:description" content="{$totalArticles} articles — static HTML for fast indexing" />
   <link rel="stylesheet" href="css/style.css" />
-" . analyticsHead() . "
+{$analytics}
 </head>
 <body>
   <header class="site-header">
@@ -509,7 +517,7 @@ function buildIndexHtml(array $articles, int $page = 1): string {
   <footer class="site-footer">
     <div class="wrap">
       <p><a href="sitemap.xml">Sitemap</a> · <a href="robots.txt">Robots</a></p>
-      <p>" . footerLinks() . " · <span id=\"generated2\">{$generated}</span></p>
+      <p>{$footer} · <span id=\"generated2\">{$generated}</span></p>
     </div>
   </footer>
 </body>
