@@ -1,0 +1,14 @@
+{
+    "title": "Two iPhones, one number: iOS 27 will feature a new Handoff function",
+    "slug": "two-iphones-one-number-ios-27-will-feature-a-new-handoff-fun",
+    "excerpt": "Apple will introduce a new Handoff feature in iOS 27, which will allow users to share a single phone number across two iPhones. One device will be the primary one and the other the secondary one, and users will be able t",
+    "content": "<p class=\"p1\">\n   Apple will add a new feature to iOS 27 called <span>Handoff</span>, which will allow users to use two iPhones with the same phone number. One smartphone will be the primary device and the other the secondary one, and users will be able to switch between them without changing their number.\n</p><p class=\"p1\">\n  Apple first mentioned this feature at the WWDC 2026 presentation in June, including it in the list of hundreds of iOS 27 innovations. However, the company did not reveal any details at the time. Now, a MacRumors forum member going by the username pdfu <a href=\"https://forums.macrumors.com/threads/heres-how-iphone-handoff-will-let-you-switch-between-two-iphone-devices-with-the-same-phone-number.2488350/\" target=\"_blank\" rel=\"noopener noreferrer\">has posted a video</a>, in which <a href=\"https://www.macrumors.com/2026/09/02/ios-27-iphone-handoff-feature/\" target=\"_blank\" rel=\"noopener noreferrer\">he demonstrated the feature</a> on two virtual iPhones in Xcode 27.\n</p><p class=\"p1\">\n  The primary iPhone will retain the main eSIM, whilst the secondary one will receive a companion eSIM. All mobile network settings will be managed from the primary device, and geolocation will be determined by whichever iPhone is currently being used for calls and mobile data.\n</p><p class=\"p1\">\n  The feature can be configured in 'Settings' under the 'Cellular' section. To use it, you'll need two iPhones running iOS 27 and support from your mobile network operator. Among the first operators expected to introduce this capability are T-Mobile in the US and Deutsche Telekom in Germany.\n</p><p class=\"p2\">\n  The feature is currently being tested, but its release is expected alongside the final version of iOS 27 later this month.\n</p><p class=\"p2\">\n  <b> <a href=\"https://mezha.ua/en/news/mac-app-store-intel-end-314764/\" target=\"_blank\" rel=\"noopener noreferrer\">Read also: Apple has allowed developers to discontinue support for Intel Macs in apps from the App Store</a></b>\n</p>",
+    "category": "general",
+    "image_url": "https://img.mezha.ua/mezha/images/doc/1/3/324466/13d005f16a7774e97aada2207fa6652f.jpeg?w=1200&q=85&stamp=1788416319",
+    "source_url": "https://mezha.ua/en/news/ios-27-dozvolit-peremikati-odin-nomer-mizh-dvoma-iphone-314837/",
+    "author": "TheTools",
+    "published_at": "2026-09-03T16:21:07+02:00",
+    "trend": true,
+    "trend_title": "Two iPhones, one number: iOS 27 will feature a new Handoff function",
+    "country": "JP"
+}
