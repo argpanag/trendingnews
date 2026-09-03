@@ -1,7 +1,6 @@
 // Pure vanilla JS - no frameworks, no build step
 const els = {
   grid: document.getElementById('articles'),
-  detail: document.getElementById('detail'),
   meta: document.getElementById('meta'),
   generated: document.getElementById('generated'),
   search: document.getElementById('search')
@@ -101,10 +100,10 @@ function cardHtml(a) {
   const staticHref = `articles/${a.slug}/`;
   return `
   <article class="card">
-    <a href="${staticHref}" data-slug="${a.slug}" class="card-link"><img src="${a.image_url || ''}" alt="" loading="lazy" onerror="this.style.display='none'"></a>
+    <a href="${staticHref}"><img src="${a.image_url || ''}" alt="" loading="lazy" onerror="this.style.display='none'"></a>
     <div class="card-body">
       <div class="badge">${escapeHtml(a.category)}</div>
-      <h2><a href="${staticHref}" data-slug="${a.slug}" class="card-link">${escapeHtml(a.title)}</a></h2>
+      <h2><a href="${staticHref}">${escapeHtml(a.title)}</a></h2>
       <p>${escapeHtml(a.excerpt || '')}</p>
       <div class="card-meta"><span>${escapeHtml(a.author || '')}</span><span>${date}</span></div>
     </div>
@@ -112,31 +111,6 @@ function cardHtml(a) {
 }
 
 function render() {
-  const hash = location.hash;
-  if (hash.startsWith('#/article/')) {
-    const slug = hash.replace('#/article/', '');
-    const a = allArticles.find(x => x.slug === slug);
-    if (!a) {
-      els.detail.classList.remove('hidden'); els.grid.innerHTML = '';
-      els.detail.innerHTML = `<p>Article not found. <a href="#/">Back to list</a></p>`;
-      return;
-    }
-    els.grid.innerHTML = '';
-    els.detail.classList.remove('hidden');
-    const staticHref2 = `articles/${a.slug}/`;
-    els.detail.innerHTML = `
-      <a href="#/">← Back</a> · <a href="${staticHref2}" style="font-size:.85rem;color:#6b7280">static version</a>
-      <img src="${a.image_url || ''}" alt="" onerror="this.style.display='none'">
-      <div class="badge">${escapeHtml(a.category)}</div>
-      <h1>${escapeHtml(a.title)}</h1>
-      <div style="color:#6b7280;font-size:.9rem">${escapeHtml(a.author || '')} · ${new Date(a.published_at).toLocaleString()} · <a href="${a.source_url}" target="_blank" rel="noopener">source</a> · <a href="${staticHref2}" rel="canonical">permalink</a></div>
-      <div class="content">${a.content || ''}</div>
-    `;
-    window.scrollTo(0,0);
-    return;
-  }
-
-  els.detail.classList.add('hidden');
   const list = filtered();
   els.meta.textContent = `${list.length} / ${allArticles.length} articles` + (activeFilter !== 'all' ? ` · ${activeFilter}` : '') + (searchQ ? ` · search: "${searchQ}"` : '');
   els.grid.innerHTML = list.map(cardHtml).join('') || `<p>No articles match.</p>`;
@@ -152,21 +126,9 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
-    location.hash = '#/';
     render();
   });
 });
 els.search.addEventListener('input', e => { searchQ = e.target.value; render(); });
-window.addEventListener('hashchange', render);
-// Intercept SEO static links for SPA navigation (keeps fast JS, but crawlers follow static HTML)
-document.addEventListener('click', e => {
-  const a = e.target.closest('a[data-slug]');
-  if (a && a.dataset.slug) {
-    // let middle-click / ctrl-click open static page normally
-    if (e.ctrlKey || e.metaKey || e.button === 1) return;
-    e.preventDefault();
-    location.hash = `#/article/${a.dataset.slug}`;
-  }
-});
 
 load();

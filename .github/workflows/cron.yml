@@ -1,9 +1,9 @@
-name: Hourly Ingest Cron
+name: Hourly Trends Ingest
 
 on:
   schedule:
     - cron: '0 * * * *'  # every hour UTC
-  workflow_dispatch:     # allow manual run
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,26 +14,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          node-version: '22'
+          php-version: '8.2'
+          extensions: mbstring, xml, dom, curl, json
+          coverage: none
 
-      - name: Install deps
-        run: npm ci --ignore-scripts || npm install
-
-      - name: Ingest from API -> SQLite -> JSON
-        env:
-          API_URL: ${{ secrets.API_URL }}
+      - name: Run trends scraper for tier-1 countries
         run: |
-          node scripts/ingest.js
-          node scripts/export.js
-          echo "Generated at $(date -u)"
-          ls -lh data/
+          for country in US GB DE FR JP; do
+            echo "=== Scraping $country ==="
+            php api/trends_scraper.php --country=$country || true
+            sleep 5
+          done
+
+      - name: Run trends scraper for tier-2 countries
+        run: |
+          for country in AU CA IT ES BR IN KR MX NL SE; do
+            echo "=== Scraping $country ==="
+            php api/trends_scraper.php --country=$country || true
+            sleep 3
+          done
+
+      - name: Rebuild index and articles
+        run: |
+          php api/build_index.php
+          php api/rebuild_articles.php
 
       - name: Commit & push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/articles.json data/articles.db || true
-          git diff --cached --quiet || git commit -m "chore: hourly ingest $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: trends update $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push || echo "No changes to push"

@@ -29,5 +29,9 @@ a:hover { text-decoration:underline; }
 .detail .content { margin-top:12px; }
 .detail .content p { margin:0 0 12px; }
 .hidden { display:none; }
+.pagination { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:24px 0; padding:16px 0; }
+.pagination a { display:inline-flex; align-items:center; justify-content:center; min-width:40px; height:40px; padding:0 12px; border:1px solid var(--border); background:#fff; border-radius:999px; color:var(--text); font-size:.9rem; }
+.pagination a:hover { background:var(--bg); text-decoration:none; }
+.pagination a.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 .site-footer { margin-top:28px; padding:18px 0; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; text-align:center; }
 @media (max-width:600px){ #search{ width:100%; margin-left:0; } }
