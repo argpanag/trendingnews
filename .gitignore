@@ -1,22 +1,30 @@
+# Dependencies
 node_modules/
+package.json
+package-lock.json
+
+# OS
 .DS_Store
+
+# Environment
 .env
+
+# Cloudflare
 wrangler/
 .dev.vars
 
-# Local-only files (not needed on GitHub)
+# Local PHP tools & data (not needed on GitHub Pages)
 api/
 data/
 config.php
-*.ps1
 scripts/
 worker/
-package.json
-package-lock.json
-PROJECT.md
-TRANSFER.md
-CHANGELOG.md
-audit_articles.ps1
+check_data.php
 fix_articles.php
 cleanup_nonlatin.php
-check_data.php
+audit_articles.ps1
+
+# Docs / local files
+CHANGELOG.md
+PROJECT.md
+TRANSFER.md
