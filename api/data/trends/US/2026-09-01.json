@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-09-03T23:04:35+00:00",
+    "generated_at": "2026-09-04T03:38:08+00:00",
     "date": "2026-09-01",
     "country": "US",
-    "count": 6,
+    "count": 7,
     "articles": [
         {
             "title": "Candy recalled in 13 states, including Ohio and Indiana",
@@ -72,6 +72,20 @@
             "published_at": "2026-09-01T14:00:00Z",
             "trend": true,
             "trend_title": "Cyrus Allen provides Chiefs fans a glimpse into the respect Patrick Mahomes demands",
+            "country": "US"
+        },
+        {
+            "title": "September outlook: Summer may win the tug of war with fall",
+            "slug": "september-outlook-summer-may-win-the-tug-of-war-with-fall",
+            "excerpt": "A hot start may set the tone for a warmer-than-normal month, while rainfall is expected to finish near to slightly below normal.",
+            "content": "<ul class=\"font-sans uppercase text-sm flex gap-2 font-semibold\" data-post-tags>\n              <li><a href=\"/tag/outlooks/\" target=\"_blank\" rel=\"noopener noreferrer\">Outlooks</a></li>\n          </ul><p class=\"text-base md:text-lg \">A hot start may set the tone for a warmer-than-normal month, while rainfall is expected to finish near to slightly below normal.</p><figure class=\"w-full h-full relative max-w-content\">\n          <picture>\n  <source>\n  <img src=\"https://storage.ghost.io/c/9b/2a/9b2aed80-72a3-473a-aaf8-035d8a6ee8cb/content/images/size/w30/2026/09/55488648624_5d0eeb1c8d_k.jpg\" alt=\"Clouds reflect off of a building at 17th St. NW in DC in late August.\">\n</source></picture>\n        <figcaption><span>Clouds reflect off of a building at 17th St. NW in DC in late August. (angela n./Flickr)</span></figcaption>\n      </figure>",
+            "category": "general",
+            "image_url": "https://storage.ghost.io/c/9b/2a/9b2aed80-72a3-473a-aaf8-035d8a6ee8cb/content/images/size/w1200/2026/09/55488648624_5d0eeb1c8d_k.jpg",
+            "source_url": "https://www.capitalweather.com/september-outlook-summer-may-win-the-tug-of-war-with-fall/",
+            "author": "TheTools",
+            "published_at": "2026-09-01T13:48:00.000Z",
+            "trend": true,
+            "trend_title": "September outlook: Summer may win the tug of war with fall",
             "country": "US"
         },
         {
