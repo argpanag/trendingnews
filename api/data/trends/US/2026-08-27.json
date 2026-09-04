@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-09-04T13:17:15+00:00",
+    "generated_at": "2026-09-04T17:27:44+00:00",
     "date": "2026-08-27",
     "country": "US",
-    "count": 1,
+    "count": 2,
     "articles": [
         {
             "title": "CrowdStrike CEO: AI exposes dangerous cyber gaps that legacy tools can’t handle",
@@ -16,6 +16,20 @@
             "published_at": "2026-08-27T22:45:42+0000",
             "trend": true,
             "trend_title": "CrowdStrike CEO: AI exposes dangerous cyber gaps that legacy tools can’t handle",
+            "country": "US"
+        },
+        {
+            "title": "Judge Jeanine Pirro sends heartwarming message to Fox News replacement",
+            "slug": "judge-jeanine-pirro-sends-heartwarming-message-to-fox-news-r",
+            "excerpt": "A WARM handoff has finally closed one of Fox News' biggest empty seats, more than a year after Judge Jeanine Pirro left The Five for...",
+            "content": "<div class=\"single__header single__header--is-featured\">\n\t<header class=\"article-header\">\n\t\t\n\t\t\n\t\t<div class=\"article-headline-section\">\n\t\t\t<span class=\"article-header__kicker\">\n\t\t\t\tBIG SHOES TO FILL\t\t\t</span>\n\t\t\t<h1 class=\"article-header__headline\">\n\t\t\t\tJudge Jeanine Pirro sends heartwarming video message as replacement on Fox’s The Five is finally announced after a year\t\t\t</h1>\n\t\t</div>\n\n\t\t\n\n\t\t\n\t\t\n\n\t\t<div class=\"google-preferred-source\" data-component=\"googlePreferredSource\">\n\t<a class=\"google-preferred-source__link\" href=\"https://www.google.com/preferences/source?q=https://www.the-sun.com\" target=\"_blank\" rel=\"noopener noreferrer\">\n\t\t<span class=\"google-preferred-source__icon\" aria-hidden=\"true\">\n\t\t\t<svg width=\"18\" height=\"18\" viewbox=\"0 0 18 18\" xmlns=\"http://www.w3.org/2000/svg\" focusable=\"false\">\n\t<path d=\"M17.64 9.2045C17.64 8.56636 17.5827 7.95272 17.4764 7.36363H9V10.845H13.8436C13.635 11.97 13.0009 12.9231 12.0477 13.5613V15.8195H14.9564C16.6582 14.2527 17.64 11.9454 17.64 9.2045Z\" fill=\"#4285F4\"></path>\n\t<path d=\"M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 9 14.4204C6.65591 14.4204 4.67182 12.8372 3.96409 10.71H0.957275V13.0418C2.43818 15.9831 5.48182 18 9 18Z\" fill=\"#34A853\"></path>\n\t<path d=\"M3.96409 10.71C3.78409 10.17 3.68182 9.59318 3.68182 9C3.68182 8.40682 3.78409 7.83 3.96409 7.29V4.95818H0.957275C0.347727 6.17318 0 7.54773 0 9C0 10.4523 0.347727 11.8268 0.957275 13.0418L3.96409 10.71Z\" fill=\"#FBBC05\"></path>\n\t<path d=\"M9 3.57955C10.3214 3.57955 11.5077 4.03364 12.4405 4.92545L15.0218 2.34409C13.4632 0.891818 11.4259 0 9 0C5.48182 0 2.43818 2.01682 0.957275 4.95818L3.96409 7.29C4.67182 5.16273 6.65591 3.57955 9 3.57955Z\" fill=\"#EA4335\"></path>\n</svg>\n\t\t</span>\n\t\t<span class=\"google-preferred-source__label\">\n\t\t\tAdd us as a preferred source\t\t</span>\n\t</a>\n</div>\n\n\t\t\n<div class=\"article-top-mobile__image-container article-top-mobile__image-container--video\">\n\n\t<div id=\"bc-video-6404155154112\" class=\"brightcove brightcove--is-featured\">\n\t\t<div class=\"brightcove__holder vjs-pip-container\">\n\t\t\t<video id=\"video_6404155154112_5067014667001\" data-account=\"5067014667001\" data-player=\"Jy5cnrEmQ\" data-video-id-pending=\"6404155154112\" data-brightcove-id=\"video_6404155154112_5067014667001\" data-video-type=\"Regular VOD\" poster=\"https://www.the-sun.com/wp-content/uploads/sites/6/2026/08/ch-jeanine-emily-off-platform.jpg?quality=90&amp;strip=all&amp;w=1920&amp;h=1080&amp;crop=1&amp;q=80\" muted playsinline data-ad-video-label=\"featured\"></video>\n\t\t</div>\n\n\t\t\n\t</div>\n</div>\n\t</header>\n</div>",
+            "category": "general",
+            "image_url": "https://www.the-sun.com/wp-content/uploads/sites/6/2026/08/ch-jeanine-emily-off-platform.jpg?quality=90&strip=all&w=1920&h=1080&crop=1",
+            "source_url": "https://www.the-sun.com/news/16908672/emily-compagno-the-five-judge-jeanine-pirro/",
+            "author": "TheTools",
+            "published_at": "2026-08-27T20:50:09+00:00",
+            "trend": true,
+            "trend_title": "Judge Jeanine Pirro sends heartwarming message to Fox News replacement",
             "country": "US"
         }
     ]
