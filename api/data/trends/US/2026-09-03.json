@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-09-04T17:27:44+00:00",
+    "generated_at": "2026-09-04T20:29:50+00:00",
     "date": "2026-09-03",
     "country": "US",
-    "count": 93,
+    "count": 94,
     "articles": [
         {
             "title": "Taylor Frankie Paul Confirms She Got Engaged on Pulled ‘Bachelorette’ Season, Reveals What Happened After Filming",
@@ -1178,6 +1178,20 @@
             "published_at": "2026-09-03T10:24:09.565Z",
             "trend": true,
             "trend_title": "Boeing finds US$1.9 billion hole after bringing Spirit AeroSystems back in-house, report says",
+            "country": "US"
+        },
+        {
+            "title": "Chinese Petroleum Chamber Proposes Libyan Energy Sector Cooperation",
+            "slug": "chinese-petroleum-chamber-proposes-libyan-energy-sector-coop",
+            "excerpt": "The Chinese Petroleum Chamber of Commerce met with Libya's General Union of Chambers to discuss investment opportunities in the country's oil, gas, and renewable energy sectors.",
+            "content": "<figure class=\"article-featured-float\" data-astro-cid-wou4l6ro>   </figure><p>Chinese companies affiliated with the Chinese Petroleum Chamber of Commerce are ready to contribute to the development of Libya’s oil, gas and renewable energy sectors, and to leverage the capabilities and expertise available in China.</p><p>The statement was made by the Secretary-General of the Chinese Petroleum Chamber of Commerce and Industry. It came during the meeting she held yesterday, accompanied by her delegation, with the Libyan General Union of Chambers at the latter’s Tripoli headquarters.</p><p>The meeting was attended by the Chairman of the General Union of Chambers, the International Relations Advisor, the Director General, and various Union officials and staff members.</p><p>The meeting explored prospects for enhancing economic and investment cooperation between Libya and China, particularly in the oil, gas, and renewable energy sectors.</p><p>The Secretary-General also confirmed her participation in the energy forum scheduled to be held at the Misrata Free Zone in November 2026. Meanwhile, the General Union of Chambers of Commerce, Industry, and Agriculture in Libya extended an invitation to the Secretary-General and her affiliated Chinese companies to participate as guests of honour in the Libyan-European Oil, Gas, and Energy Forum, scheduled for December 2–3, 2026, in Madrid, Spain.</p><p>At the conclusion of the meeting, both sides emphasized the importance of continued coordination and communication, as well as opening new avenues for economic and investment cooperation and partnership. These efforts aim to strengthen economic ties between Libya and China and support the development of Libya's energy sector.</p><h4 class=\"entity-popover-name\">Libya</h4><p>No profile summary yet.</p><h4 class=\"entity-popover-name\">Tripoli</h4><p>No profile summary yet.</p><h4 class=\"entity-popover-name\">China</h4><p>No profile summary yet.</p><h4 class=\"entity-popover-name\">Misrata Free Zone</h4><p>No profile summary yet.</p><h4 class=\"entity-popover-name\">Spain</h4><p>No profile summary yet.</p><h4 class=\"entity-popover-name\">Madrid</h4><p>No profile summary yet.</p><h4 class=\"entity-popover-name\">Chinese Petroleum Chamber of Commerce</h4><p>No profile summary yet.</p><h4 class=\"entity-popover-name\">Libyan General Union of Chambers</h4><p>No profile summary yet.</p>",
+            "category": "general",
+            "image_url": "https://ct.libyaherald.com/storage/2025/11/post/featured-image/General-Union-of-Chambers-logo-131125.jpg",
+            "source_url": "https://libyaherald.com/2026/09/chinese-companies-ready-to-contribute-to-development-of-oil-gas-renewable-energy-sectors-chinese-petroleum-chamber-of-commerce",
+            "author": "TheTools",
+            "published_at": "2026-09-03T08:19:00+00:00",
+            "trend": true,
+            "trend_title": "Chinese Petroleum Chamber Proposes Libyan Energy Sector Cooperation",
             "country": "US"
         },
         {
