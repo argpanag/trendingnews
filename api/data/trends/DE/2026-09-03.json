@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-09-04T20:30:35+00:00",
+    "generated_at": "2026-09-04T22:52:34+00:00",
     "date": "2026-09-03",
     "country": "DE",
-    "count": 94,
+    "count": 95,
     "articles": [
         {
             "title": "Epic Games Brings Cross-Platform Voice Chat To Fortnite And Its Services - AOL",
@@ -1052,6 +1052,20 @@
             "published_at": "2026-09-03T13:13:16+00:00",
             "trend": true,
             "trend_title": "Armeevertreter warnen vor Angriffen der Hisbollah",
+            "country": "DE"
+        },
+        {
+            "title": "Rivian R2: Auto mit neuer Software für VW lässt in Europa noch etwas auf sich warten",
+            "slug": "rivian-r2-auto-mit-neuer-software-f-r-vw-l-sst-in-europa-noc",
+            "excerpt": "Rivian entwickelt mit und für Volkswagen eine neue grundlegende Architektur für künftige Autos, die Premiere feiert das System 2027 im neuen ID Up und schon",
+            "content": "<p class=\"wp-block-paragraph\">Rivian entwickelt mit und für Volkswagen eine neue grundlegende Architektur für künftige Autos, die Premiere feiert das System <a href=\"https://www.smartdroid.de/id-up-fuer-20-000-euro-ab-2027-name-fuer-finalen-id-every1-soll-feststehen/\" target=\"_blank\" rel=\"noopener noreferrer\">2027 im neuen ID Up</a> und schon jetzt im Rivian R2. </p><p class=\"wp-block-paragraph\">Rivian ist für mich durch die Partnerschaft mit Amazon bekannt geworden und später natürlich auch mit den ersten eigenen Autos. Das junge Unternehmen erlangte in Deutschland jedoch vor allem damit Bekanntheit, weil es für über 6 Milliarden Euro in einem Joint-Venture mit VW eine neue Software-Architektur entwickelt.</p><p class=\"wp-block-paragraph\">Volkswagen wechselt auf das Software-definierte Auto mit dem ID Up ab 2027 und zugleich kommt diese Technologie auch bei den Fahrzeugen von Rivian selbst zum Einsatz. Was wir von VW erwarten können, zeigt unter anderem der neue Rivian R2, der jetzt in den USA startet und womöglich ab 2028 auch in Europa zu haben sein wird.</p><p class=\"wp-block-paragraph\">Darf man auch hoffen, dass Rivian künftig die Infotainment-Software liefert? Angeblich soll es bei VW hinter den Kulissen zumindest diskutiert und probiert werden. <a href=\"https://edison.media/verkehr/rivian-r2-es-muss-nicht-immer-tesla-sein/25271735/\" target=\"_blank\" rel=\"noopener noreferrer\">Tester berichten</a> von intuitiven Menüs und haptischem Feedback, das zu überzeugen weiß. Schon von Tesla wissen wir, dass die Amerikaner das können. Derzeit setzt VW auf eine angepasste Android-Lösung von Google.</p><p class=\"wp-block-paragraph\">Man muss schon sagen, dass wir in Deutschland zum Teil immer noch mit einer flüssigen Kartendarstellung zu kämpfen haben, obwohl das jedes 200 Euro Handy hinbekommt. Rivian kriegt das natürlich auch hin und die Bedienung wirkt wahnsinnig schnell. Wenn das so mal in einem VW landet, wäre das schon sehr nice.</p><figure class=\"wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio\"><div>\n<iframe title=\"Rivian Completely Rewrote Its Software, This Is RivianOS 2.0\" src=\"about:blank\"></iframe>\n</div></figure><p class=\"wp-block-paragraph\">Der neue Rivian R2 würde mit etwas über 4,70 Meter bereits nach Europa passen, aber das Highlight für den Massenmarkt wird der geplante R3 sein. Dieses neue <a href=\"https://www.smartdroid.de/elektroautos/\" target=\"_blank\" rel=\"noopener noreferrer\">Elektroauto</a> wird noch etwas kompakter als die bisherigen Rivian-Stromer sein und lehnt meines Erachtens sehr stark an frühere Golf-Modelle an.</p><figure class=\"wp-block-image size-large\"><img src=\"https://i0.wp.com/www.smartdroid.de/wp-content/uploads/2024/03/Rivian-R3.jpg?resize=900%2C518&amp;ssl=1\" alt=\"Rivian-R3\"></figure><h3 class=\"about-author\">Der Autor</h3><h4 class=\"author-title\" itemprop=\"name\">Denny Fischer</h4>",
+            "category": "general",
+            "image_url": "https://www.smartdroid.de/wp-content/uploads/2026/03/Rivian-R2-scaled.jpg",
+            "source_url": "https://www.smartdroid.de/rivian-r2-auto-mit-neuer-software-fuer-vw-laesst-in-europa-noch-etwas-auf-sich-warten/",
+            "author": "TheTools",
+            "published_at": "2026-09-03T13:00:00+02:00",
+            "trend": true,
+            "trend_title": "Rivian R2: Auto mit neuer Software für VW lässt in Europa noch etwas auf sich warten",
             "country": "DE"
         },
         {
