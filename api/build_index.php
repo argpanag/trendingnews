@@ -204,11 +204,11 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archive: {$humanDate} — {$totalArticles} articles | trends-online.com</title>
+  <title>Archive: {$humanDate} — {$totalArticles} articles | {$config['site_name']}</title>
   <meta name="description" content="Trending news articles from {$humanDate}. {$totalArticles} articles indexed." />
   <link rel="canonical" href="{$siteUrl}/archive/{$date}/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Archive: {$humanDate} | trends-online.com" />
+  <meta property="og:title" content="Archive: {$humanDate} | {$config['site_name']}" />
   <meta property="og:description" content="{$totalArticles} articles from {$humanDate}" />
   <link rel="stylesheet" href="../../css/style.css" />
   {$analytics}
@@ -216,7 +216,7 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="logo" href="../../">trends-online<span>.com</span></a>
+      <a class="logo" href="../../">{$config['site_name']}</a>
       <nav class="nav">
         <a href="../../" class="filter-btn">← Home</a>
         <a href="../" class="filter-btn active">Archive</a>
@@ -235,7 +235,7 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p><a href="../../">trends-online.com</a> · <a href="../">All archives</a></p>
+      <p><a href="../../">{$config['site_name']}</a> · <a href="../">All archives</a></p>
       <p>{$footer} · <span>{$generated}</span></p>
     </div>
   </footer>
@@ -268,11 +268,11 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archive — {$totalDays} days, {$totalArticles} articles | trends-online.com</title>
+  <title>Archive — {$totalDays} days, {$totalArticles} articles | {$config['site_name']}</title>
   <meta name="description" content="Browse all trending news by date. {$totalDays} days archived with {$totalArticles} total articles." />
   <link rel="canonical" href="{$siteUrl}/archive/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Archive | trends-online.com" />
+  <meta property="og:title" content="Archive | {$config['site_name']}" />
   <meta property="og:description" content="{$totalDays} days, {$totalArticles} articles" />
   <link rel="stylesheet" href="../css/style.css" />
   <style>
@@ -287,7 +287,7 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="logo" href="../">trends-online<span>.com</span></a>
+      <a class="logo" href="../">{$config['site_name']}</a>
       <nav class="nav">
         <a href="../" class="filter-btn">← Home</a>
         <a href="./" class="filter-btn active">Archive</a>
@@ -303,7 +303,7 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p><a href="../">trends-online.com</a></p>
+      <p><a href="../">{$config['site_name']}</a></p>
       <p>{$footer} · <span>{$generated}</span></p>
     </div>
   </footer>
@@ -386,11 +386,11 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{$countryName} — {$totalArticles} articles | trends-online.com</title>
+  <title>{$countryName} — {$totalArticles} articles | viral-news.eu</title>
   <meta name="description" content="Trending news from {$countryName}. {$totalArticles} articles indexed." />
   <link rel="canonical" href="{$siteUrl}/index-{$countryLower}.html" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="{$countryName} — trends-online.com" />
+  <meta property="og:title" content="{$countryName} — viral-news.eu" />
   <meta property="og:description" content="{$totalArticles} articles from {$countryName}" />
   <link rel="stylesheet" href="css/style.css" />
 {$analytics}
@@ -398,7 +398,7 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
 <body>
   <header class=\"site-header\">
     <div class=\"wrap\">
-      <a class=\"logo\" href=\"./\">trends-online<span>.com</span></a>
+      <a class=\"logo\" href=\"./\">viral-news<span>.eu</span></a>
       <nav class=\"nav\">
         <a href=\"./\" class=\"filter-btn\">All</a>
         <a href=\"archive/\" class=\"filter-btn\">Archive</a>
@@ -414,7 +414,7 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <p><a href="./">trends-online.com</a> · <a href="archive/">Archive</a></p>
+      <p><a href="./">viral-news.eu</a> · <a href="archive/">Archive</a></p>
       <p>{$footer} · <span>{$generated}</span></p>
     </div>
   </footer>
@@ -497,11 +497,11 @@ function buildIndexHtml(array $articles, int $page = 1): string {
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>trends-online.com — News</title>
+  <title>viral-news.eu — News</title>
   <meta name="description" content="All articles — static HTML with full content for indexing. {$totalArticles} articles." />
   <link rel="canonical" href="{$siteUrl}/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="trends-online.com — News" />
+  <meta property="og:title" content="viral-news.eu — News" />
   <meta property="og:description" content="{$totalArticles} articles — static HTML for fast indexing" />
   <link rel="stylesheet" href="css/style.css" />
 {$analytics}
@@ -509,7 +509,7 @@ function buildIndexHtml(array $articles, int $page = 1): string {
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="logo" href="./">trends-online<span>.com</span></a>
+      <a class="logo" href="./">viral-news<span>.eu</span></a>
       <nav class="nav">
         <a href="./" class="filter-btn active">All ({$totalArticles})</a>
         <a href="archive/" class="filter-btn">Archive</a>
