@@ -77,7 +77,7 @@ function pushToGithub(): array {
     $commands = [
         'git add -A',
         'git diff --cached --quiet || git commit -m "chore: manual update ' . date('Y-m-d\TH:i:s') . '"',
-        'git push origin HEAD:master',
+        'git push origin HEAD:main',
     ];
 
     $output = [];
