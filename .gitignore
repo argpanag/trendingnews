@@ -1,30 +1,30 @@
-# Dependencies
-node_modules/
-package.json
-package-lock.json
+# Only track generated static files
+*.html
+*.css
+*.js
+*.svg
+*.png
+*.jpg
+*.gif
+*.ico
+sitemap.xml
+robots.txt
 
-# OS
-.DS_Store
+# Ignore everything else
+*
 
-# Environment
-.env
+# Exception: allow root level generated files
+!/*.html
+!/*.css
+!/*.js
+!/*.svg
+!/*.png
+!/*.jpg
+!/*.gif
+!/*.ico
+!/sitemap.xml
+!/robots.txt
 
-# Cloudflare
-wrangler/
-.dev.vars
-
-# Local PHP tools & data (not needed on GitHub Pages)
-api/
-data/
-config.php
-scripts/
-worker/
-check_data.php
-fix_articles.php
-cleanup_nonlatin.php
-audit_articles.ps1
-
-# Docs / local files
-CHANGELOG.md
-PROJECT.md
-TRANSFER.md
+# Allow directories that contain generated content
+!articles/
+!archive/

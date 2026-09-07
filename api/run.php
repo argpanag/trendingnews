@@ -3,12 +3,16 @@
  * Orchestrator: scrape trends + auto-rebuild + push to GitHub.
  *
  * Usage via browser/URL:
- *   /api/run.php?all=true           Scrape all countries + rebuild + push
- *   /api/run.php?tier=1             Scrape tier-1 + rebuild + push
- *   /api/run.php?tier=2             Scrape tier-2 + rebuild + push
- *   /api/run.php?tier=3             Scrape tier-3 + rebuild + push
- *   /api/run.php?country=US         Scrape single country + rebuild + push
- *   /api/run.php?all=true&force     Force reload existing data + push
+ *   /api/run.php?all=true           Scrape all countries + rebuild
+ *   /api/run.php?tier=1             Scrape tier-1 + rebuild
+ *   /api/run.php?tier=2             Scrape tier-2 + rebuild
+ *   /api/run.php?tier=3             Scrape tier-3 + rebuild
+ *   /api/run.php?country=US         Scrape single country + rebuild
+ *   /api/run.php?all=true&force    Force reload existing data
+ *   /api/run.php?tier=1&push=true  Rebuild + commit + push (opt-in)
+ *
+ * Only HTML/CSS/JS files are pushed (api/ and config.php are gitignored).
+ * Git pull is never performed to avoid merge conflicts.
  */
 declare(strict_types=1);
 
@@ -62,11 +66,12 @@ function runBuild(): array {
 
 function pushToGithub(): array {
     $root = __DIR__ . '/..';
+    $branch = $GLOBALS['config']['deploy_branch'] ?? 'master';
+
     $commands = [
         'git add -A',
         'git diff --cached --quiet || git commit -m "chore: manual update ' . date('Y-m-d\TH:i:s') . '"',
-        'git pull --rebase origin main',
-        'git push',
+        'git push origin ' . escapeshellarg($branch),
     ];
 
     $output = [];
@@ -77,15 +82,15 @@ function pushToGithub(): array {
         $output = [];
         $exitCode = 0;
         exec("cd " . escapeshellarg($root) . " && {$cmd} 2>&1", $output, $exitCode);
-        if ($exitCode !== 0 && !str_starts_with($cmd, 'git pull')) {
-            return ['ok' => false, 'error' => implode("\n", $output)];
+        if ($exitCode !== 0) {
+            return ['ok' => false, 'error' => implode("\n", $output), 'committed' => $committed];
         }
         if (str_starts_with($cmd, 'git diff')) {
             $committed = !str_contains(implode($output), 'nothing to commit');
         }
     }
 
-    return ['ok' => true, 'committed' => $committed];
+    return ['ok' => true, 'committed' => $committed, 'pushed' => true];
 }
 
 function main(): void {
@@ -159,8 +164,13 @@ function main(): void {
     }
 
     $build = runBuild();
-    $push = pushToGithub();
     $elapsed = time() - $startTime;
+
+    $push = null;
+    $wantPush = (($_GET['push'] ?? '') === 'true') || (($_GET['push'] ?? '') === '1');
+    if ($wantPush) {
+        $push = pushToGithub();
+    }
 
     $response = [
         'ok' => empty($errors),
