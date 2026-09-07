@@ -23,6 +23,7 @@ function getPerPage(): int { return $GLOBALS['config']['articles_per_page']; }
 
 function escBuild(string $s): string { return htmlspecialchars($s, ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8'); }
 
+if (!function_exists('analyticsHead')) {
 function analyticsHead(): string {
     global $config;
     $ga = $config['google_analytics_id'] ?? '';
@@ -39,9 +40,12 @@ function analyticsHead(): string {
     }
     return $html;
 }
+}
 
+if (!function_exists('footerLinks')) {
 function footerLinks(string $sep = ' · '): string {
     return "<a href=\"privacy.html\">Privacy Policy</a>{$sep}<a href=\"terms.html\">Terms</a>{$sep}<a href=\"about.html\">About</a>{$sep}<a href=\"contact.html\">Contact</a>";
+}
 }
 
 function loadAllArticles(): array {

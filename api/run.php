@@ -33,8 +33,14 @@ function runScraper(string $country, bool $force): array {
     $exitCode = 0;
     exec($cmd . " 2>&1", $output, $exitCode);
 
-    $lastLine = end($output);
-    $result = json_decode($lastLine, true);
+    // Find JSON object in output (trends_scraper outputs JSON at the end)
+    $fullOutput = implode("\n", $output);
+    if (preg_match('/\{[^{}]*"ok"[^{}]*\}/s', $fullOutput, $matches)) {
+        $jsonStr = $matches[0];
+        $result = json_decode($jsonStr, true);
+    } else {
+        $result = null;
+    }
 
     return [
         'country' => $country,
@@ -71,7 +77,7 @@ function pushToGithub(): array {
     $commands = [
         'git add -A',
         'git diff --cached --quiet || git commit -m "chore: manual update ' . date('Y-m-d\TH:i:s') . '"',
-        'git push origin ' . escapeshellarg($branch),
+        'git push origin HEAD:master',
     ];
 
     $output = [];

@@ -21,6 +21,7 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 
 $config = require __DIR__ . '/../config.php';
 
+if (!function_exists('analyticsHead')) {
 function analyticsHead(): string {
     global $config;
     $ga = $config['google_analytics_id'] ?? '';
@@ -37,9 +38,12 @@ function analyticsHead(): string {
     }
     return $html;
 }
+}
 
+if (!function_exists('footerLinks')) {
 function footerLinks(): string {
     return "<a href=\"../../privacy.html\">Privacy Policy</a> · <a href=\"../../terms.html\">Terms</a> · <a href=\"../../about.html\">About</a> · <a href=\"../../contact.html\">Contact</a>";
+}
 }
 
 function getCountry(): string {
