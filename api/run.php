@@ -65,6 +65,7 @@ function pushToGithub(): array {
     $commands = [
         'git add -A',
         'git diff --cached --quiet || git commit -m "chore: manual update ' . date('Y-m-d\TH:i:s') . '"',
+        'git pull --rebase origin main',
         'git push',
     ];
 
@@ -76,7 +77,7 @@ function pushToGithub(): array {
         $output = [];
         $exitCode = 0;
         exec("cd " . escapeshellarg($root) . " && {$cmd} 2>&1", $output, $exitCode);
-        if ($exitCode !== 0) {
+        if ($exitCode !== 0 && !str_starts_with($cmd, 'git pull')) {
             return ['ok' => false, 'error' => implode("\n", $output)];
         }
         if (str_starts_with($cmd, 'git diff')) {

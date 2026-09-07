@@ -317,6 +317,7 @@ function extractArticle(string $html, string $url): ?array {
 }
 
 function buildSeoHtml(array $a, string $country): string {
+    global $config;
     $title = esc($a['title'] ?? 'Untitled');
     $excerpt = esc($a['excerpt'] ?? '');
     $slug = $a['slug'] ?? 'unknown';

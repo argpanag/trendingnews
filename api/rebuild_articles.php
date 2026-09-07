@@ -83,6 +83,7 @@ function loadAllArticles(): array {
 }
 
 function buildArticleHtml(array $a): string {
+    global $config;
     $title = esc($a['title'] ?? 'Untitled');
     $excerpt = esc($a['excerpt'] ?? '');
     $slug = $a['slug'] ?? 'unknown';
