@@ -16,8 +16,7 @@ const DEFAULT_COUNTRY = 'US';
 const TRENDS_DATA_DIR = __DIR__ . '/data/trends';
 const TRENDS_HISTORY_DIR = __DIR__ . '/history_trends';
 const TRENDS_SEO_DIR = __DIR__ . '/../articles';
-const SITE_URL = 'https://trends-online.com';
-const MAX_TRENDS = 15;
+const MAX_TRENDS_DEFAULT = 10;
 const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
 
 $config = require __DIR__ . '/../config.php';
@@ -260,7 +259,7 @@ function extractTrends(string $rssUrl): array {
         }
 
         $trends[] = compact('title', 'traffic', 'pub', 'pic', 'news');
-        if (count($trends) >= MAX_TRENDS) break;
+        if (count($trends) >= ($config['max_trends'] ?? MAX_TRENDS_DEFAULT)) break;
     }
 
     return $trends;
@@ -321,7 +320,7 @@ function buildSeoHtml(array $a, string $country): string {
     $title = esc($a['title'] ?? 'Untitled');
     $excerpt = esc($a['excerpt'] ?? '');
     $slug = $a['slug'] ?? 'unknown';
-    $fullUrl = rtrim(SITE_URL, '/') . '/articles/' . $slug . '/';
+    $fullUrl = rtrim($config['site_url'], '/') . '/articles/' . $slug . '/';
     $img = esc($a['image_url'] ?? '');
     $author = esc($a['author'] ?? 'TheTools');
     $published = $a['published_at'] ?? date('c');
@@ -348,7 +347,7 @@ function buildSeoHtml(array $a, string $country): string {
         'publisher' => [
             '@type' => 'Organization',
             'name' => 'trends-online.com',
-            'logo' => ['@type' => 'ImageObject', 'url' => rtrim(SITE_URL, '/') . '/css/style.css']
+            'logo' => ['@type' => 'ImageObject', 'url' => rtrim($config['site_url'], '/') . '/css/style.css']
         ],
         'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $fullUrl],
     ];
@@ -439,7 +438,7 @@ function main(): void {
                 }
             }
         }
-        $toScrape = array_slice($toScrape, 0, MAX_TRENDS);
+        $toScrape = array_slice($toScrape, 0, $config['max_trends'] ?? MAX_TRENDS_DEFAULT);
         echo $isCli ? "[trends:{$country}] scraping " . count($toScrape) . " news urls\n" : '';
 
         $dataDir = TRENDS_DATA_DIR . '/' . $country;

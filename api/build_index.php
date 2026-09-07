@@ -90,7 +90,12 @@ function loadAllArticles(): array {
         }
     }
     $articles = array_values($byUrl);
-    usort($articles, fn($a,$b)=> strcmp($b['published_at'] ?? '', $a['published_at'] ?? ''));
+    usort($articles, function($a, $b) {
+        $aUs = strtoupper($a['country'] ?? '') === 'US' ? 0 : 1;
+        $bUs = strtoupper($b['country'] ?? '') === 'US' ? 0 : 1;
+        if ($aUs !== $bUs) return $aUs - $bUs;
+        return strcmp($b['published_at'] ?? '', $a['published_at'] ?? '');
+    });
     return $articles;
 }
 
@@ -330,8 +335,10 @@ function groupArticlesByCountry(array $articles): array {
         if (!$country) continue;
         $byCountry[$country][] = $a;
     }
+    $us = [];
+    if (isset($byCountry['US'])) { $us = ['US' => $byCountry['US']]; unset($byCountry['US']); }
     ksort($byCountry);
-    return $byCountry;
+    return $us + $byCountry;
 }
 
 const COUNTRY_NAMES = [

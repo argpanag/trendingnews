@@ -12,6 +12,8 @@
  */
 declare(strict_types=1);
 
+set_time_limit(0);
+
 header('Content-Type: application/json; charset=utf-8');
 
 $config = require __DIR__ . '/../config.php';

@@ -5,7 +5,6 @@
  */
 declare(strict_types=1);
 
-const SITE_URL = 'https://trends-online.com';
 const SEO_DIR = __DIR__ . '/../articles';
 const DATA_DIR = __DIR__ . '/data';
 
@@ -87,7 +86,7 @@ function buildArticleHtml(array $a): string {
     $title = esc($a['title'] ?? 'Untitled');
     $excerpt = esc($a['excerpt'] ?? '');
     $slug = $a['slug'] ?? 'unknown';
-    $fullUrl = rtrim(SITE_URL, '/') . '/articles/' . $slug . '/';
+    $fullUrl = rtrim($config['site_url'], '/') . '/articles/' . $slug . '/';
     $img = esc($a['image_url'] ?? '');
     $author = esc($a['author'] ?? 'TheTools');
     $published = $a['published_at'] ?? date('c');
@@ -116,7 +115,7 @@ function buildArticleHtml(array $a): string {
         'publisher' => [
             '@type' => 'Organization',
             'name' => 'trends-online.com',
-            'logo' => ['@type' => 'ImageObject', 'url' => SITE_URL . '/css/style.css']
+            'logo' => ['@type' => 'ImageObject', 'url' => $config['site_url'] . '/css/style.css']
         ],
         'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $fullUrl],
     ];
