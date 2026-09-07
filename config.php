@@ -11,6 +11,9 @@ return [
     'site_locale'  => 'en_US',
     'site_lang'    => 'en',
 
+    // Git deployment
+    'deploy_branch' => 'main',
+
     // Scraping
     'max_trends'        => 10,
     'scrape_delay_tier1' => 5,
