@@ -1,9 +1,23 @@
 {
-    "generated_at": "2026-09-08T10:53:48+02:00",
+    "generated_at": "2026-09-08T10:53:57+00:00",
     "date": "2026-09-02",
     "country": "FR",
-    "count": 5,
+    "count": 6,
     "articles": [
+        {
+            "title": "Pendant les 45 dernières années, la France est le seul pays du G7 à ne pas avoir connu un taux de chômage à moins de 7 % !",
+            "slug": "pendant-les-45-derni-res-ann-es-la-france-est-le-seul-pays-d",
+            "excerpt": "Selon la dernière note d’Eurostat du 1ᵉʳ septembre 2026, le taux de chômage harmonisé (calculé selon des indicateurs permettant des comparaisons internationales) de la France atteint 8,3 % en juillet 2026, contre 7,7 % u",
+            "content": "<p>Selon la dernière <a href=\"https://ec.europa.eu/eurostat/fr/web/products-euro-indicators/w/3-01092026-bp\" target=\"_blank\" rel=\"noopener noreferrer\">note d’Eurostat</a> du 1ᵉʳ septembre 2026, le taux de chômage harmonisé (calculé selon des indicateurs permettant des comparaisons internationales) de la France atteint 8,3 % en juillet 2026, contre 7,7 % un an plus tôt – soit 2,647 millions de personnes, et 20,7 % pour les moins de 25 ans. La France se situe ainsi bien au-dessus de la moyenne de l’Union européenne (6,1 %) et de la zone euro (6,4 %). Depuis le début des années 1980, le chômage oscille structurellement entre 7 % et 12 % chez nous, sans jamais être durablement résorbé. Après un premier sommet vers 10,5 % au milieu des années 1980, il culmine à environ 11,7 % en 1994, reflue à la fin des années 1990, touche un point bas à 7,4 % en 2008, remonte à 10,4 % en 2015, redescend à un plancher de 7,3 % en 2022-2023, puis repart à la hausse pour atteindre 8,3 % en juillet 2026.</p><p>Comparée à ses partenaires du G7, la France apparaît comme une <a href=\"https://contrepoints.org/chomage-sixieme-hausse-daffilee-et-toujours-linertie-francaise/\" target=\"_blank\" rel=\"noopener noreferrer\">exception</a>. Toutes les autres démocraties riches sont, à un moment ou à un autre, passées sous la barre de 7 %. La France, jamais. Certains pays sont même descendus très en deçà : le Japon (2 %), l’Allemagne (3 %), les États-Unis (3,5 %), le Royaume-Uni (3,8 %), le Canada (5 %) et l’Italie (5,8 % en 2007, et encore mieux, 5,1 % en 2026).</p><p style=\"text-align: center;\"><em>Sources : OCDE, Eurostat</em></p>",
+            "category": "general",
+            "image_url": "https://contrepoints.org/wp-content/uploads/taux-de-chomage-pays-G7.jpg",
+            "source_url": "https://contrepoints.org/pendant-les-45-dernieres-annees-la-france-est-le-seul-pays-du-g7-a-ne-pas-avoir-connu-un-taux-de-chomage-a-moins-de-7/",
+            "author": "TheTools",
+            "published_at": "2026-09-02T20:27:54+00:00",
+            "trend": true,
+            "trend_title": "Pendant les 45 dernières années, la France est le seul pays du G7 à ne pas avoir connu un taux de chômage à moins de 7",
+            "country": "FR"
+        },
         {
             "title": "Fortitude Trailer Reveals the Simon West Spy Film",
             "slug": "fortitude-trailer-reveals-the-simon-west-spy-film",
