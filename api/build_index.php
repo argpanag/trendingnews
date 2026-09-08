@@ -43,8 +43,8 @@ function analyticsHead(): string {
 }
 
 if (!function_exists('footerLinks')) {
-function footerLinks(string $sep = ' · '): string {
-    return "<a href=\"privacy.html\">Privacy Policy</a>{$sep}<a href=\"terms.html\">Terms</a>{$sep}<a href=\"about.html\">About</a>{$sep}<a href=\"contact.html\">Contact</a>";
+function footerLinks(string $depth = './', string $sep = ' · '): string {
+    return "<a href=\"{$depth}privacy.html\">Privacy Policy</a>{$sep}<a href=\"{$depth}terms.html\">Terms</a>{$sep}<a href=\"{$depth}about.html\">About</a>{$sep}<a href=\"{$depth}contact.html\">Contact</a>";
 }
 }
 
@@ -193,11 +193,11 @@ function buildDailyArchiveHtml(string $date, array $dayArticles, array $allDates
     }
     $nav .= '</div>';
     $analytics = analyticsHead();
-    $footer = footerLinks();
+    $footer = footerLinks('../');
 
     return <<<HTML
 <!DOCTYPE html>
-<html lang="el">
+<html lang="{$config['site_lang']}">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -257,11 +257,11 @@ function buildArchiveIndexHtml(array $allDates, array $byDay): string {
         $list .= "      <a href=\"{$date}/\" class=\"archive-day\"><span class=\"archive-date\">{$humanDate}</span><span class=\"archive-count\">{$count} articles</span></a>\n";
     }
     $analytics = analyticsHead();
-    $footer = footerLinks();
+    $footer = footerLinks('../');
 
     return <<<HTML
 <!DOCTYPE html>
-<html lang="el">
+<html lang="{$config['site_lang']}">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -379,7 +379,7 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
 
     return <<<HTML
 <!DOCTYPE html>
-<html lang="el">
+<html lang="{$config['site_lang']}">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -396,12 +396,12 @@ function buildCountryIndexHtml(string $country, array $countryArticles, array $a
 {$analytics}
 </head>
 <body>
-  <header class=\"site-header\">
-    <div class=\"wrap\">
-      <a class=\"logo\" href=\"./\">viral-news<span>.eu</span></a>
-      <nav class=\"nav\">
-        <a href=\"./\" class=\"filter-btn\">All</a>
-        <a href=\"archive/\" class=\"filter-btn\">Archive</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="./">viral-news<span>.eu</span></a>
+      <nav class="nav">
+        <a href="./" class="filter-btn">All</a>
+        <a href="archive/" class="filter-btn">Archive</a>
 {$countryLinks}      </nav>
     </div>
   </header>
@@ -490,7 +490,7 @@ function buildIndexHtml(array $articles, int $page = 1): string {
 
     return <<<HTML
 <!DOCTYPE html>
-<html lang="el">
+<html lang="{$config['site_lang']}">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -528,7 +528,7 @@ function buildIndexHtml(array $articles, int $page = 1): string {
   <footer class="site-footer">
     <div class="wrap">
       <p><a href="sitemap.xml">Sitemap</a> · <a href="robots.txt">Robots</a></p>
-      <p>{$footer} · <span id=\"generated2\">{$generated}</span></p>
+      <p>{$footer} · <span id="generated2">{$generated}</span></p>
     </div>
   </footer>
 </body>

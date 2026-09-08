@@ -1,30 +1,18 @@
-# Only track generated static files
-*.html
-*.css
-*.js
-*.svg
-*.png
-*.jpg
-*.gif
-*.ico
-sitemap.xml
-robots.txt
-
-# Ignore everything else
-*
-
-# Exception: allow root level generated files
-!/*.html
-!/*.css
-!/*.js
-!/*.svg
-!/*.png
-!/*.jpg
-!/*.gif
-!/*.ico
-!/sitemap.xml
-!/robots.txt
-
-# Allow directories that contain generated content
-!articles/
-!archive/
+# Build pipeline, config, data — not needed for static HTML site
+api/
+data/
+scripts/
+worker/
+config.php
+package.json
+package-lock.json
+node_modules/
+.github/
+*.php
+*.ps1
+*.sql
+*.db
+CHANGELOG.md
+README.md
+PROJECT.md
+TRANSFER.md

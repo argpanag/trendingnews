@@ -130,7 +130,7 @@ function buildArticleHtml(array $a): string {
     
     return <<<HTML
 <!DOCTYPE html>
-<html lang="el">
+<html lang="{$config['site_lang']}">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -155,7 +155,7 @@ function buildArticleHtml(array $a): string {
   <meta name="twitter:image" content="{$img}" />
   <link rel="stylesheet" href="../../css/style.css" />
   {$analytics}
-  <script type=\"application/ld+json\">{$jsonLdStr}</script>
+  <script type="application/ld+json">{$jsonLdStr}</script>
 </head>
 <body>
   <header class="site-header">
