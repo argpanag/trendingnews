@@ -1,8 +1,8 @@
 {
-    "generated_at": "2026-09-09T17:42:21+00:00",
+    "generated_at": "2026-09-09T20:42:03+00:00",
     "date": "2026-09-03",
     "country": "FR",
-    "count": 54,
+    "count": 55,
     "articles": [
         {
             "title": "L’OM attaqué, offensive saoudienne pour Cornelius",
@@ -506,6 +506,20 @@
             "published_at": "2026-09-03T13:20:44+02:00",
             "trend": true,
             "trend_title": "Ukraine : fusillade à Kiev entre le SBU et le GUR, Zelensky dénonce un incident «absolument honteux» entre services de renseignement rivaux",
+            "country": "FR"
+        },
+        {
+            "title": "2026 Ballon d'Or: PSG manager, Luis Enrique names player that should win award",
+            "slug": "2026-ballon-d-or-psg-manager-luis-enrique-names-player-that-",
+            "excerpt": "Paris Saint-Germain manager, Luis Enrique, has claimed that one of his players should win the 2026 Ballon d'Or award. In the year under review, PSG won",
+            "content": "<h3 class=\"mvp-post-cat left relative\"><a href=\"https://dailypost.ng/sport-news/\" target=\"_blank\" rel=\"noopener noreferrer\"><span>Sport</span></a></h3><p>Paris Saint-Germain manager, Luis Enrique, has claimed that one of his players should win the 2026 Ballon d’Or award.</p><p>In the year under review, PSG won both the Ligue 1 and Champions League titles.</p><p>Players like current Ballon d’Or winner Ousmane Dembele, Khvicha Kvaratskhelia, Desire Doue and Joao Neves shone for the French club.</p><p>Another PSG player, Fabian Ruiz, also won the 2026 World Cup with Spain.</p><h4 class=\"dp-ic-heading\">Recommended</h4><p>Speaking to the media on Thursday, Enrique said: “The Ballon d’Or should go to a PSG player.</p><p>“We have players who have won the Champions League. We have Fábian, who won the World Cup as well. We have  Ousmane who won the Ballon d’Or last season.</p><p>“That’s my opinion but I’m not interested in individual awards.”</p><h3 class=\"dp-ms-heading\">You may like</h3>",
+            "category": "general",
+            "image_url": "https://dailypost.ng/wp-content/uploads/2023/04/Luis-Enrique.jpg",
+            "source_url": "https://dailypost.ng/2026/09/03/2026-ballon-dor-psg-manager-luis-enrique-name-players-that-should-win-award/",
+            "author": "TheTools",
+            "published_at": "2026-09-03T12:55:33+00:00",
+            "trend": true,
+            "trend_title": "2026 Ballon d’Or: PSG manager, Luis Enrique names player that should win award",
             "country": "FR"
         },
         {
