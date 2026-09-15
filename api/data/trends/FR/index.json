@@ -1,16 +1,16 @@
 {
-    "generated_at": "2026-09-15T09:51:00+00:00",
+    "generated_at": "2026-09-15T14:43:21+00:00",
     "country": "FR",
-    "total": 74,
+    "total": 71,
     "days": [
         {
             "date": "2026-09-15",
-            "count": 6,
+            "count": 4,
             "file": "2026-09-15.json"
         },
         {
             "date": "2026-09-14",
-            "count": 3,
+            "count": 2,
             "file": "2026-09-14.json"
         },
         {
