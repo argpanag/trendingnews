@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malicious Twitch chat messages can trigger code execution on OBS Studio | viral-news.eu</title>
+  <meta name="description" content="A malicious Twitch chat message could be turned into native code execution on a streamer’s Windows PC through a OBS Studio flaw." />
+  <link rel="canonical" href="https://viral-news.eu/articles/malicious-twitch-chat-messages-can-trigger-code-execution-on/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="el_GR" />
+  <meta property="og:title" content="Malicious Twitch chat messages can trigger code execution on OBS Studio" />
+  <meta property="og:description" content="A malicious Twitch chat message could be turned into native code execution on a streamer’s Windows PC through a OBS Studio flaw." />
+  <meta property="og:url" content="https://viral-news.eu/articles/malicious-twitch-chat-messages-can-trigger-code-execution-on/" />
+  <meta property="og:site_name" content="viral-news.eu" />
+  <meta property="og:image" content="https://cyberinsider.com/wp-content/uploads/2026/09/Malicious-Twitch-chat-messages-can-trigger-code-execution-on-OBS-Studio.png" />
+  <meta property="article:published_time" content="2026-09-25T15:17:41+00:00" />
+  <meta property="article:author" content="TheTools" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Malicious Twitch chat messages can trigger code execution on OBS Studio" />
+  <meta name="twitter:description" content="A malicious Twitch chat message could be turned into native code execution on a streamer’s Windows PC through a OBS Studio flaw." />
+  <meta name="twitter:image" content="https://cyberinsider.com/wp-content/uploads/2026/09/Malicious-Twitch-chat-messages-can-trigger-code-execution-on-OBS-Studio.png" />
+  <link rel="stylesheet" href="../../css/style.css" />
+    <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK3MBPWY3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BTK3MBPWY3');</script>
+  <!-- Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","ycksw3tw4c");</script>
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Malicious Twitch chat messages can trigger code execution on OBS Studio","description":"A malicious Twitch chat message could be turned into native code execution on a streamer’s Windows PC through a OBS Studio flaw.","image":["https://cyberinsider.com/wp-content/uploads/2026/09/Malicious-Twitch-chat-messages-can-trigger-code-execution-on-OBS-Studio.png"],"datePublished":"2026-09-25T15:17:41+00:00","dateModified":"2026-09-25T15:17:41+00:00","author":{"@type":"Person","name":"TheTools"},"publisher":{"@type":"Organization","name":"viral-news.eu","logo":{"@type":"ImageObject","url":"https://viral-news.eu/css/style.css"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://viral-news.eu/articles/malicious-twitch-chat-messages-can-trigger-code-execution-on/"}}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="../../">viral-news.eu</a>
+      <nav class="nav">
+        <a href="../../" class="filter-btn">← Home</a>
+        <span class="badge">general</span>
+        <span class="badge">ES</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="detail">
+      <a href="../../">← Back</a>
+      <img src="https://cyberinsider.com/wp-content/uploads/2026/09/Malicious-Twitch-chat-messages-can-trigger-code-execution-on-OBS-Studio.png" alt="" loading="lazy" onerror="this.style.display='none'" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin-top:12px" />
+      <div class="badge">general</div>
+      <h1>Malicious Twitch chat messages can trigger code execution on OBS Studio</h1>
+      <div style="color:#6b7280;font-size:.9rem">TheTools · 25.09.2026 15:17 · <a href="https://cyberinsider.com/malicious-twitch-chat-messages-can-trigger-code-execution-on-obs-studio/" target="_blank" rel="noopener">source</a> · <a href="https://viral-news.eu/articles/malicious-twitch-chat-messages-can-trigger-code-execution-on/">permalink</a></div>
+      <div class="content"><figure class="wp-block-image size-full"><img src="https://cyberinsider.com/wp-content/uploads/2026/09/Malicious-Twitch-chat-messages-can-trigger-code-execution-on-OBS-Studio.png" alt="Malicious Twitch chat messages can trigger code execution on OBS Studio"></figure><p class="wp-block-paragraph">A malicious Twitch chat message could be turned into native code execution on a streamer’s Windows PC by chaining a vulnerable OBS overlay with an outdated Chromium vulnerability.</p><p class="wp-block-paragraph">The attack requires the streamer to be using OBS Studio 32.2.2 or older without changing its default security settings.</p><p class="wp-block-paragraph">The research began after <a href="https://blog.scrt.ch/2026/09/22/how-one-twitch-chat-message-became-code-execution-on-a-streamers-pc/" target="_blank" rel="noopener noreferrer">Orange researchers</a> noticed a screenshot posted by a friend showing code from a custom Twitch chat overlay. The overlay inserted viewer messages directly into the page as HTML without sanitization, creating a cross-site scripting (XSS) flaw that allowed a Twitch viewer to execute JavaScript inside the overlay.</p><p class="wp-block-paragraph">Orange began coordinating with the overlay developer in February 2026 and later reproduced the complete attack chain on an updated Windows 11 system in July. The issue was reported to the OBS team on August 19, ahead of public disclosure on September 22.</p><p class="wp-block-paragraph">OBS Studio is a widely used open-source application for livestreaming and video recording. Its Browser Source feature allows streamers to display web-based content such as chat boxes, donation alerts, follower notifications, animations, and other interactive widgets directly inside a scene.</p><p class="wp-block-paragraph">These Browser Sources are rendered using Chromium through the Chromium Embedded Framework (CEF). That meant the vulnerable overlay was not simply displaying text: the XSS allowed attacker-controlled JavaScript to execute inside the Chromium renderer embedded in OBS.</p><p class="wp-block-paragraph">Normally, compromising a Chromium renderer does not immediately provide access to the underlying operating system because the browser sandbox limits what compromised processes can do. However, OBS configured its CEF environment with the Chromium sandbox disabled.</p><figure class="aligncenter size-large is-resized"><img src="https://cyberinsider.com/wp-content/uploads/2026/09/diag-1-1024x428.jpg" alt=""><figcaption>Attack overview<br><strong>Orange</strong></figcaption></figure><p class="wp-block-paragraph">Orange found that OBS Studio 32.2.2 also shipped Chromium 127.0.6533.120 with V8 12.7.224.18, leaving it vulnerable to CVE-2024-7971, a V8 type-confusion vulnerability Google fixed in Chrome 128 in August 2024.</p><p class="wp-block-paragraph">CVE-2024-7971 is known to have been exploited in real-world attacks. Microsoft previously linked exploitation of the vulnerability to the North Korean threat actor it tracks as Citrine Sleet, while CISA added the flaw to its Known Exploited Vulnerabilities catalog.</p><p class="wp-block-paragraph">Orange developed a proof-of-concept exploit for the CEF version bundled with OBS. In the demonstrated chain, a malicious Twitch message triggered the overlay’s XSS, JavaScript exploited CVE-2024-7971 to obtain native code execution inside the Chromium renderer, and the absence of a sandbox meant no additional sandbox-escape vulnerability was required.</p><figure class="wp-block-video aligncenter"><video src="https://cyberinsider.com/wp-content/uploads/2026/09/output2.mp4"></video><figcaption><strong>Orange</strong></figcaption></figure><p class="wp-block-paragraph">The researcher stressed that a default OBS installation is not automatically vulnerable to Twitch messages. The remote entry point depended on a Browser Source that rendered viewer-controlled data as unsanitized HTML. An attacker-controlled webpage loaded directly into an OBS Browser Source or browser dock could potentially provide another path to the browser-exploitation stage.</p><p class="wp-block-paragraph">OBS has since been working on two defenses. The project is upgrading its embedded browser to CEF 128 or newer, with related changes merged into both obs-browser and obs-studio in September. The team is also testing whether the Chromium sandbox can be re-enabled after earlier compatibility problems involving authentication.</p><p class="wp-block-paragraph">Until updated builds are deployed, streamers and overlay developers should treat Browser Source content as untrusted. Viewer messages should be inserted as plain text wherever possible, and any application that genuinely requires HTML should sanitize it before rendering it inside OBS.</p><p class="wp-block-paragraph">If you liked this article, be sure to follow us on <strong><a href="https://twitter.com/CyberInsidercom" target="_blank" rel="noopener noreferrer">X/Twitter</a></strong> and also <strong><a href="https://www.linkedin.com/company/cyberinsider/" target="_blank" rel="noopener noreferrer">LinkedIn</a></strong> for more exclusive content.</p><h2 class="wp-block-heading" id="h-more-from-cyberinsider">More from CyberInsider</h2><h3 class="entry-title"><a href="https://cyberinsider.com/google-warns-shinyhunters-is-mass-exploiting-oracle-peoplesoft-flaw/" target="_blank" rel="noopener noreferrer">Google warns ShinyHunters is mass-exploiting Oracle PeopleSoft flaw</a></h3><h3 class="entry-title"><a href="https://cyberinsider.com/viewsonic-viewboard-zero-day-flaws-allow-screen-spying-and-device-takeover/" target="_blank" rel="noopener noreferrer">ViewSonic ViewBoard zero-day flaws allow screen spying and device takeover</a></h3><h3 class="entry-title"><a href="https://cyberinsider.com/iphone-users-targeted-with-ios-exploit-chain-in-fake-government-notices/" target="_blank" rel="noopener noreferrer">iPhone users targeted with iOS exploit chain in fake government notices</a></h3><h3 class="entry-title"><a href="https://cyberinsider.com/meta-brings-private-processing-privacy-protections-to-ai-glasses/" target="_blank" rel="noopener noreferrer">Meta brings Private Processing privacy protections to AI glasses</a></h3><h3 class="entry-title"><a href="https://cyberinsider.com/operas-free-vpn-now-turns-on-automatically-on-public-wi-fi/" target="_blank" rel="noopener noreferrer">Opera’s free VPN now turns on automatically on public Wi-Fi</a></h3><h3 class="entry-title"><a href="https://cyberinsider.com/openai-agent-breached-australian-govt-site-after-bypassing-access-blocks/" target="_blank" rel="noopener noreferrer">OpenAI agent breached Australian govt. site after bypassing access blocks</a></h3><h4 class="author-box-title">About <span>Alex Lekander</span></h4><p>Alex Lekander is the Editor-in-Chief and owner of CyberInsider.com. With a passion for cybersecurity and privacy topics, Alex launched this website in 2020. His background and expertise cover privacy research, technical writing, software testing, and site administration. He holds a Bachelor of Science and a Master of Science from Johns Hopkins University.</p><h2 class="screen-reader-text">Reader Interactions</h2></div>
+      <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
+      <p style="color:#6b7280;font-size:.85rem">Source: <a href="https://cyberinsider.com/malicious-twitch-chat-messages-can-trigger-code-execution-on-obs-studio/" target="_blank" rel="noopener">original</a> · archived on viral-news.eu</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><a href="../../">viral-news.eu</a> · <a href="../../archive/">Archive</a></p>
+      <p><a href="../../privacy.html">Privacy Policy</a> · <a href="../../terms.html">Terms</a> · <a href="../../about.html">About</a> · <a href="../../contact.html">Contact</a></p>
+    </div>
+  </footer>
+</body>
+</html>
