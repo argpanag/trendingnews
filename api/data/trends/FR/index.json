@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-10-01T01:53:46+00:00",
+    "generated_at": "2026-10-01T08:33:49+00:00",
     "country": "FR",
-    "total": 69,
+    "total": 72,
     "days": [
         {
             "date": "2026-10-01",
-            "count": 2,
+            "count": 5,
             "file": "2026-10-01.json"
         },
         {
