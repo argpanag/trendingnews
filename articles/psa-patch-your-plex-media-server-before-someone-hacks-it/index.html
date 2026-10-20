@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PSA: Patch your Plex media server before someone hacks it | viral-news.eu</title>
+  <meta name="description" content="A researcher says attacks chaining 4 vulnerabilities is hacking unpatched boxes." />
+  <link rel="canonical" href="https://viral-news.eu/articles/psa-patch-your-plex-media-server-before-someone-hacks-it/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="el_GR" />
+  <meta property="og:title" content="PSA: Patch your Plex media server before someone hacks it" />
+  <meta property="og:description" content="A researcher says attacks chaining 4 vulnerabilities is hacking unpatched boxes." />
+  <meta property="og:url" content="https://viral-news.eu/articles/psa-patch-your-plex-media-server-before-someone-hacks-it/" />
+  <meta property="og:site_name" content="viral-news.eu" />
+  <meta property="og:image" content="https://cdn.arstechnica.net/wp-content/uploads/2026/10/plex-media-server-1152x648.webp" />
+  <meta property="article:published_time" content="2026-10-19T19:39:19+00:00" />
+  <meta property="article:author" content="TheTools" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PSA: Patch your Plex media server before someone hacks it" />
+  <meta name="twitter:description" content="A researcher says attacks chaining 4 vulnerabilities is hacking unpatched boxes." />
+  <meta name="twitter:image" content="https://cdn.arstechnica.net/wp-content/uploads/2026/10/plex-media-server-1152x648.webp" />
+  <link rel="stylesheet" href="../../css/style.css" />
+    <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK3MBPWY3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BTK3MBPWY3');</script>
+  <!-- Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","ycksw3tw4c");</script>
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"PSA: Patch your Plex media server before someone hacks it","description":"A researcher says attacks chaining 4 vulnerabilities is hacking unpatched boxes.","image":["https://cdn.arstechnica.net/wp-content/uploads/2026/10/plex-media-server-1152x648.webp"],"datePublished":"2026-10-19T19:39:19+00:00","dateModified":"2026-10-19T19:39:19+00:00","author":{"@type":"Person","name":"TheTools"},"publisher":{"@type":"Organization","name":"viral-news.eu","logo":{"@type":"ImageObject","url":"https://viral-news.eu/css/style.css"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://viral-news.eu/articles/psa-patch-your-plex-media-server-before-someone-hacks-it/"}}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="../../">viral-news.eu</a>
+      <nav class="nav">
+        <a href="../../" class="filter-btn">← Home</a>
+        <span class="badge">general</span>
+        <span class="badge">AU</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="detail">
+      <a href="../../">← Back</a>
+      <img src="https://cdn.arstechnica.net/wp-content/uploads/2026/10/plex-media-server-1152x648.webp" alt="" loading="lazy" onerror="this.style.display='none'" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin-top:12px" />
+      <div class="badge">general</div>
+      <h1>PSA: Patch your Plex media server before someone hacks it</h1>
+      <div style="color:#6b7280;font-size:.9rem">TheTools · 19.10.2026 19:39 · <a href="https://arstechnica.com/security/2026/10/recently-fixed-plex-media-vulnerabilities-are-being-exploited-to-install-malware/" target="_blank" rel="noopener">source</a> · <a href="https://viral-news.eu/articles/psa-patch-your-plex-media-server-before-someone-hacks-it/">permalink</a></div>
+      <div class="content"><p class="text-gray-550 dark:text-gray-250 dusk:text-gray-250 mt-4 px-[15px] text-lg leading-tight sm:px-5 md:px-0">
+        A researcher says attacks chaining 4 vulnerabilities is hacking unpatched boxes.
+      </p><p>Recently fixed vulnerabilities in the Plex Media Server are under active exploitation in attacks that, when successful, install malware, including cryptominers and residential proxy apps, a researcher said.</p><p>Plex <a href="https://forums.plex.tv/t/important-security-update-for-plex-media-server-v1-43-2-and-earlier/942319" target="_blank" rel="noopener noreferrer">fixed</a> four vulnerabilities at the start of last month. Three weeks later, <a href="https://www.cvedetails.com/vulnerability-list/vendor_id-14994/year-2026/Plex.html" target="_blank" rel="noopener noreferrer">published CVE</a> designations revealed five vulnerabilities, with one of them carrying a severity rating of 8.6 out of 10. A researcher last week <a href="https://zmain.info/blog/plex2shell" target="_blank" rel="noopener noreferrer">revealed an exploit</a> that chained four of them together to achieve remote code execution of the device running a vulnerable Plex version. The researcher named the chain “Plex2Shell.”</p><h2>Complex exploit chain</h2><p>The new details allowed a separate researcher to create a honeypot that could track attempts in the wild to exploit the vulnerability chain. Within a day, the researcher began seeing active scanning of the simulated Plex server and eventually successful attempts to infect devices. So far, successful attacks are installing two payloads. One is a cryptominer, which uses the device to mine cryptocurrency and deposit it into a wallet controlled by the attacker. The other payload is residential proxy software, which allows people to anonymize their Internet activity (much of it illegal) by connecting to the infected box and then using it to send the user’s traffic to a final destination.</p><p>“Plex may be hosted on residential IP [sic] and I think threat actors would love to have residential IP proxy to access corporate VPNs and emails,” the second researcher wrote.</p><p>The published exploit chain was part of a proof-of-concept attack that the first researcher included when submitting a bug report to Plex. The <a href="https://github.com/code-zm/plex2shell" target="_blank" rel="noopener noreferrer">complex code</a> completes a series of steps, including performing an unauthenticated SSRF, a loopback pivot, a security token theft, a payload delivery, and finally the execution of the payload. The bug finder said he used AI “heavily” to develop the exploit chain. Steps included:</p><ol>
+<li><span>Recon: Break the system into logical components. Map every path from user input to a dangerous sink.</span></li>
+<li><span>Hunt: Focused vulnerability hunt per component.</span></li>
+<li><span>Verify: Spawn a separate agent to try to disprove each finding. If it can’t refute the bug, it’s likely real.</span></li>
+<li><span>Chain: Find</span></li>
+</ol><p>“This was not a matter of telling the LLM ‘go hack Plex,’” the researcher wrote. “It was hours of iterative work, dead ends, and reprioritization. All of the judgment calls on what to look for and what to prioritize were mine. The LLM speeds this process up significantly, allowing me to stay at a higher level and simply guide the process.”</p><p>Plex representatives didn’t immediately respond to questions.</p><p>Anyone using Plex should ensure it’s running version 1.43.3. The software can be configured to install updates automatically, or users can manually download and install them. Given the active exploitation, outdated versions should be updated immediately. Beyond that, users should devote care to properly securing the media servers. The safest option is to restrict its access to local networks with no exposure to the Internet. This option prevents being able to use many useful features, though. One option when connecting a device to the open Internet is to <a href="https://www.xda-developers.com/ways-i-secured-my-plex-server-before-exposing-it-to-the-internet/" target="_blank" rel="noopener noreferrer">route traffic through a reverse proxy</a>, instead of using the default port 32400. Users should also use only <a href="https://support.plex.tv/articles/206225077-how-to-use-secure-server-connections/" target="_blank" rel="noopener noreferrer">secure Plex apps</a>. And of course, strong passwords are a must.</p><ol>
+              <li>
+                      <a href="https://arstechnica.com/space/2026/10/a-chinese-rocket-deorbited-over-minnesota-and-left-this-in-a-farmers-cornfield/" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn.arstechnica.net/wp-content/uploads/2026/10/848413061_1584132123754825_2260017497965151960_n-480x500.jpg" alt="Listing image for first story in Most Read: A Chinese rocket deorbited over Minnesota and left this in a farmer's cornfield">
+            </a>
+                    <div>
+                          
+              <span>
+                <span>1.</span>
+                
+              </span>
+                      </div>
+        </li>
+                      <li>
+                    <div>
+                          
+              <span>
+                <span>2.</span>
+                
+              </span>
+                      </div>
+        </li>
+                      <li>
+                    <div>
+                          
+              <span>
+                <span>3.</span>
+                
+              </span>
+                      </div>
+        </li>
+                      <li>
+                    <div>
+                          
+              <span>
+                <span>4.</span>
+                
+              </span>
+                      </div>
+        </li>
+                      <li>
+                    <div>
+                          
+              <span>
+                <span>5.</span>
+                
+              </span>
+                      </div>
+        </li>
+                      </ol></div>
+      <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
+      <p style="color:#6b7280;font-size:.85rem">Source: <a href="https://arstechnica.com/security/2026/10/recently-fixed-plex-media-vulnerabilities-are-being-exploited-to-install-malware/" target="_blank" rel="noopener">original</a> · archived on viral-news.eu</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><a href="../../">viral-news.eu</a> · <a href="../../archive/">Archive</a></p>
+      <p><a href="../../privacy.html">Privacy Policy</a> · <a href="../../terms.html">Terms</a> · <a href="../../about.html">About</a> · <a href="../../contact.html">Contact</a></p>
+    </div>
+  </footer>
+</body>
+</html>
