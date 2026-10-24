@@ -1,11 +1,11 @@
 {
-    "generated_at": "2026-10-24T20:38:36+00:00",
+    "generated_at": "2026-10-24T23:00:45+00:00",
     "country": "JP",
-    "total": 13,
+    "total": 17,
     "days": [
         {
             "date": "2026-10-24",
-            "count": 3,
+            "count": 7,
             "file": "2026-10-24.json"
         },
         {
