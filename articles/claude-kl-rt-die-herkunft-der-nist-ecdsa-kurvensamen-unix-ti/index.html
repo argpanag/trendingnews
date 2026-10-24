@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude klärt die Herkunft der NIST-ECDSA-Kurvensamen: Unix-Timestamp statt Hash | viral-news.eu</title>
+  <meta name="description" content="Claude erklärt die Herkunft der NIST-ECDSA-Kurvensamen: Seeds stammen aus lrand48, initialisiert mit Unix-Timestamps. Kein Krypto-Bruch, aber mehr Nachvollziehbarkeit der Parameterwahl." />
+  <link rel="canonical" href="https://viral-news.eu/articles/claude-kl-rt-die-herkunft-der-nist-ecdsa-kurvensamen-unix-ti/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="el_GR" />
+  <meta property="og:title" content="Claude klärt die Herkunft der NIST-ECDSA-Kurvensamen: Unix-Timestamp statt Hash" />
+  <meta property="og:description" content="Claude erklärt die Herkunft der NIST-ECDSA-Kurvensamen: Seeds stammen aus lrand48, initialisiert mit Unix-Timestamps. Kein Krypto-Bruch, aber mehr Nachvollziehbarkeit der Parameterwahl." />
+  <meta property="og:url" content="https://viral-news.eu/articles/claude-kl-rt-die-herkunft-der-nist-ecdsa-kurvensamen-unix-ti/" />
+  <meta property="og:site_name" content="viral-news.eu" />
+  <meta property="og:image" content="https://www.it-boltwise.de/wp-content/uploads/2026/10/ai-ecdsa-seeds-lrand48-timestamp.jpg" />
+  <meta property="article:published_time" content="2026-10-18T05:47:05+00:00" />
+  <meta property="article:author" content="TheTools" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claude klärt die Herkunft der NIST-ECDSA-Kurvensamen: Unix-Timestamp statt Hash" />
+  <meta name="twitter:description" content="Claude erklärt die Herkunft der NIST-ECDSA-Kurvensamen: Seeds stammen aus lrand48, initialisiert mit Unix-Timestamps. Kein Krypto-Bruch, aber mehr Nachvollziehbarkeit der Parameterwahl." />
+  <meta name="twitter:image" content="https://www.it-boltwise.de/wp-content/uploads/2026/10/ai-ecdsa-seeds-lrand48-timestamp.jpg" />
+  <link rel="stylesheet" href="../../css/style.css" />
+    <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK3MBPWY3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BTK3MBPWY3');</script>
+  <!-- Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","ycksw3tw4c");</script>
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Claude klärt die Herkunft der NIST-ECDSA-Kurvensamen: Unix-Timestamp statt Hash","description":"Claude erklärt die Herkunft der NIST-ECDSA-Kurvensamen: Seeds stammen aus lrand48, initialisiert mit Unix-Timestamps. Kein Krypto-Bruch, aber mehr Nachvollziehbarkeit der Parameterwahl.","image":["https://www.it-boltwise.de/wp-content/uploads/2026/10/ai-ecdsa-seeds-lrand48-timestamp.jpg"],"datePublished":"2026-10-18T05:47:05+00:00","dateModified":"2026-10-18T05:47:05+00:00","author":{"@type":"Person","name":"TheTools"},"publisher":{"@type":"Organization","name":"viral-news.eu","logo":{"@type":"ImageObject","url":"https://viral-news.eu/css/style.css"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://viral-news.eu/articles/claude-kl-rt-die-herkunft-der-nist-ecdsa-kurvensamen-unix-ti/"}}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="../../">viral-news.eu</a>
+      <nav class="nav">
+        <a href="../../" class="filter-btn">← Home</a>
+        <span class="badge">general</span>
+        <span class="badge">DE</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="detail">
+      <a href="../../">← Back</a>
+      <img src="https://www.it-boltwise.de/wp-content/uploads/2026/10/ai-ecdsa-seeds-lrand48-timestamp.jpg" alt="" loading="lazy" onerror="this.style.display='none'" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin-top:12px" />
+      <div class="badge">general</div>
+      <h1>Claude klärt die Herkunft der NIST-ECDSA-Kurvensamen: Unix-Timestamp statt Hash</h1>
+      <div style="color:#6b7280;font-size:.9rem">TheTools · 18.10.2026 05:47 · <a href="https://www.it-boltwise.de/claude-klaert-die-herkunft-der-nist-ecdsa-kurvensamen-unix-timestamp-statt-hash.html" target="_blank" rel="noopener">source</a> · <a href="https://viral-news.eu/articles/claude-kl-rt-die-herkunft-der-nist-ecdsa-kurvensamen-unix-ti/">permalink</a></div>
+      <div class="content"><p><strong>LONDON (IT BOLTWISE) – Claude hat die lang umstrittene Herkunft der Samen (Seeds) für mehrere NIST-ECDSA-Kurven rekonstruiert. Die kryptografisch relevanten Parameter gehen demnach nicht aus einem Hash „geheim“ erzeugter Passphrasen hervor, sondern aus dem lrand48-Zufallszahlengenerator, initialisiert mit einem Unix-Timestamp. Für P-256, P-384, P-521 und die übrigen genannten Kurven lässt sich der Seed damit durch direkte Nachbildung reproduzieren. Das betrifft nicht die Sicherheit der Kurven selbst, verschiebt aber die Begründung, weshalb damals überhaupt keine versteckten Hintertüren nötig waren.</strong></p><p>Über Jahre war die Herkunft der „seed“-Werte eines der meistverwendeten Bausteine in der Praxis ein Dauerbrenner: Bei ECDSA werden in den NIST-Vorgaben für mehrere elliptische Kurven Parameter festgelegt, deren Entstehung man damals nicht transparent nachvollziehen konnte. Konkret geht es um den Seed, aus dessen Hashwert der Kurvenkoeffizient <em>b</em> abgeleitet wird. Dass diese Seeds „einfach so“ an NIST geliefert worden waren, ohne Erklärung oder Begründung, nährte die Spekulation, die Kurven könnten absichtlich so gewählt worden sein, dass sich spätere Angriffe leichter bewerkstelligen ließen.</p><p>Die neue Einordnung kommt aus einer Untersuchung, die im Kern als Seed-Rekonstruktion funktioniert: Claude hat die publizierten Seeds für NIST P-192, P-224, P-256, P-384 und P-521 sowie zusätzlich zugehörige ANSI-X9.62-Referenzkurven daraufhin untersucht, welcher Zufalls- und Generierungsmechanismus dahinterliegen kann. Das Ergebnis ist in der Praxis überraschend schlicht und zugleich analytisch stark abgesichert: Die Seeds sind kein Produkt eines Hash-Algorithmus, sondern der Output des C-Standardbibliotheks-Zufallszahlengenerators lrand48, dessen interner Zustand mit einem Unix-Timestamp initialisiert wurde. Damit verschiebt sich die Diskussion von „möglicher subversiver Auswahl“ hin zu „reproduzierbarer, zeitbasierter PRNG-Entstehung“.</p><p>Technisch beschreibt die Rekonstruktion, wie der Generator benutzt wurde: Aus dem mit Timestamp t initialisierten PRNG wurden in einer Schleife Kandidatenblöcke gezogen. Pro Iteration wurden 20 Bytes als Kandidatenseed gesammelt; anschließend wurde offenbar nach einer festgelegten Anzahl von Iterationen n der Kandidat für die standardisierte Seed-Ausgabe ausgewählt. Für P-256 nennt die Analyse beispielsweise 1.842 Iterationen, bis der publizierte Seed exakt getroffen wird. Bei den Binärkurven liest sich das Muster ähnlich, nur dass die Zuordnung des Timings offenbar anders skaliert wurde: Die „eingelesenen“ Timestamp-Werte lassen sich im Nachhinein auf andere Zeitpunkte abbilden, indem für die Rekonstruktion das Timing verdoppelt bzw. geteilt wird.</p><p>Für die Sicherheit ist der wichtigste Punkt, dass hier kein neuer Angriff oder ein „Krypto-Bruch“ behauptet wird. Vielmehr wirkt die Erkenntnis wie ein Vertrauensanker für eine ältere Debatte: Wenn die Seeds aus einem weit verbreiteten PRNG stammen, der aus Uhrzeit abgeleitet wurde und dessen Ausgabe sich heute wiederherstellen lässt, sinkt die Plausibilität, dass man die Kurvenparameter mit versteckten Schwächen gezielt konstruieren wollte. In der Argumentationslogik der Studie entsteht dadurch weniger Spielraum für Subversion. Die Kurven bleiben damit das, was sie technisch ohnehin sind: wohldefinierte elliptische Kurvenparameter, deren Sicherheit in erster Linie von mathematischen Eigenschaften, Implementationsqualität und korrekter Nutzung abhängt.</p><p>Wie kam Claude zu dieser Schlussfolgerung, ohne direkt auf historische Projektartefakte zugreifen zu können? Die Analyse nutzt die typische Schwachstelle vieler PRNGs in älteren C-Libraries: lrand48 liefert nicht „vollwertige“ Zustandsbits, sondern gibt nur bestimmte Bits des internen 48-Bit-Zustands zurück. Genau dieses Bitmuster wurde bei mehreren Seeds als sichtbare Signatur erkannt: In den Top-Bits zeigen sich wiederkehrende Nullmuster mit einer Zufallswahrscheinlichkeit, die als „signifikant genug“ interpretiert wird. Von dort aus lässt sich der interne Zustand für einige Prime-Kurven über das Abgleichen benachbarter Ausgaben rückgewinnen; für andere Fälle muss die Rekonstruktion über ein Gitterproblem erfolgen, das mit der LLL-Basisreduktion (Lenstra–Lenstra–Lovász) gelöst wird. In der Veröffentlichung wird außerdem beschrieben, wie der PRNG-Zustand rückwärts und vorwärts „abgeschritten“ werden kann, bis die Form erreicht ist, die zu einer srand48-Initialisierung passt.</p><p>Neben den Seeds blieb allerdings eine zweite Baustelle offen: die Herkunft der Basispunkte <em>G</em>, also der Fixpunkte, die als Ausgangspunkt für öffentliche Schlüssel in ECDSA dienen. Die Seed-Werte bestimmen <em>G</em> nicht automatisch; deshalb untersucht die Arbeit auch, woher die publizierten <em>G</em>-Koordinaten stammen könnten. Für sechs Kurven (P-192 sowie mehrere ANSI-X9.62-„Beispielkurven“) findet die Analyse eine plausible Herkunft aus einem Generierungsprozess, der in FreeLIP und in frühen Versionen der NTL-Bibliothek mit ähnlichem Code auftaucht: Ein Generator wird mit einem kleinen Integer seed initialisiert, es werden x-Kandidaten abgeleitet (reduziert modulo <em>p</em>) und wiederholt geprüft, ob sie auf der Kurve liegen. Für die NIST-Kurven P-224, P-256, P-384 und P-521 passt dieses Rezept jedoch nicht; hier bleibt die konkrete Auswahllogik weiterhin ungeklärt, ebenso für bestimmte Binärkurven (u. a. B-163).</p><p>Für die Community ist die Veröffentlichung vor allem deshalb relevant, weil sie eine spekulative Lücke schließt, ohne den Sicherheitskern von ECDSA in Frage zu stellen. Gleichzeitig bleibt ein echter Forschungsfaden: Welche Kriterien führten dazu, dass manche Kandidaten aus demselben PRNG-Lauf übersprungen wurden, und warum genau wurden einige Seeds oder Basispunkte akzeptiert? Die Arbeit gibt dafür Hinweise darauf, dass das Überspringen zwar existiert, aber nicht so groß ist, dass man daraus „systematisch geschwächte Kurven“ ableiten muss. Praktisch können Entwickler und Prüfteams die Seeds nun über den bereitgestellten Reproduktionscode selbst nachrechnen; damit wird die Validierung von Parameterherkünften transparenter. Der einzige fehlende Seed ist dabei weiterhin ein offener Punkt, während die erklärten Teile der Debatte um absichtliche Hintertüren spürbar den Boden entziehen.</p><p style="display: none !important;" class="akismet-fields-container" data-prefix="ak_"><label>Δ<textarea></textarea></label><input></p><p><strong>27775 Personen</strong> haben unseren <a href="https://feeds.feedburner.com/itboltwise" target="_blank" rel="noopener noreferrer">RSS-Feed</a> in den <em>letzten 24 Stunden</em> abgerufen und folgen den KI-News von IT Boltwise®<br>
+<small><strong><br>
+<img src="https://www.it-boltwise.de/wp-content/uploads/2025/01/feedly-1.png"> <a href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.it-boltwise.de%2Fthemen%2Fallgemein%2Ffeed" target="_blank" rel="noopener noreferrer">Feed mit Feedly abonnieren!</a><br>
+<img src="https://www.it-boltwise.de/wp-content/uploads/2025/01/favicon-NXg-hMED-1.png"> <a href="https://follow.it/ai-business-news-it-boltwise-morning-newsletter" target="_blank" rel="noopener noreferrer">Feed mit follow.it abonnieren!</a><br>
+<img src="https://www.it-boltwise.de/wp-content/uploads/2025/01/inoreader-1.png"> <a href="https://www.inoreader.com/search/feeds/https%3A%2F%2Fwww.it-boltwise.de%2Fthemen%2Fallgemein%2Ffeed" target="_blank" rel="noopener noreferrer">Feed mit Inoreader abonnieren!</a><br>
+<img src="https://www.it-boltwise.de/wp-content/uploads/2025/01/feedspot.png"> <a href="https://www.feedspot.com/reader/fe/7863569" target="_blank" rel="noopener noreferrer">Feed mit Feedspot abonnieren!</a><br>
+<img src="https://www.it-boltwise.de/wp-content/uploads/2025/01/googlenews.png"> <a href="https://news.google.com/search?q=boltwise%20news%20k%C3%BCnstliche%20intelligenz&amp;hl=de&amp;gl=DE&amp;ceid=DE%3Ade" target="_blank" rel="noopener noreferrer">Feed mit Google abonnieren!</a></strong></small></p></div>
+      <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
+      <p style="color:#6b7280;font-size:.85rem">Source: <a href="https://www.it-boltwise.de/claude-klaert-die-herkunft-der-nist-ecdsa-kurvensamen-unix-timestamp-statt-hash.html" target="_blank" rel="noopener">original</a> · archived on viral-news.eu</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><a href="../../">viral-news.eu</a> · <a href="../../archive/">Archive</a></p>
+      <p><a href="../../privacy.html">Privacy Policy</a> · <a href="../../terms.html">Terms</a> · <a href="../../about.html">About</a> · <a href="../../contact.html">Contact</a></p>
+    </div>
+  </footer>
+</body>
+</html>
