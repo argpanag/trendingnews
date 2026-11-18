@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inside Modern Phishing Kits Built to Steal Microsoft 365 Sessions | viral-news.eu</title>
+  <meta name="description" content="Huntress researchers break down how EvilTokens, Knight Office, and Kali365 capture and replay M365 tokens, plus how defenders can detect and contain them. " />
+  <link rel="canonical" href="https://viral-news.eu/articles/inside-modern-phishing-kits-built-to-steal-microsoft-365-ses/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="el_GR" />
+  <meta property="og:title" content="Inside Modern Phishing Kits Built to Steal Microsoft 365 Sessions" />
+  <meta property="og:description" content="Huntress researchers break down how EvilTokens, Knight Office, and Kali365 capture and replay M365 tokens, plus how defenders can detect and contain them. " />
+  <meta property="og:url" content="https://viral-news.eu/articles/inside-modern-phishing-kits-built-to-steal-microsoft-365-ses/" />
+  <meta property="og:site_name" content="viral-news.eu" />
+  <meta property="og:image" content="https://www.bleepstatic.com/content/posts/2026/11/15/huntress-microsoft-365-phishing.jpg" />
+  <meta property="article:published_time" content="2026-11-18T03:28:31+00:00" />
+  <meta property="article:author" content="TheTools" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Inside Modern Phishing Kits Built to Steal Microsoft 365 Sessions" />
+  <meta name="twitter:description" content="Huntress researchers break down how EvilTokens, Knight Office, and Kali365 capture and replay M365 tokens, plus how defenders can detect and contain them. " />
+  <meta name="twitter:image" content="https://www.bleepstatic.com/content/posts/2026/11/15/huntress-microsoft-365-phishing.jpg" />
+  <link rel="stylesheet" href="../../css/style.css" />
+    <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BTK3MBPWY3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BTK3MBPWY3');</script>
+  <!-- Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","ycksw3tw4c");</script>
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Inside Modern Phishing Kits Built to Steal Microsoft 365 Sessions","description":"Huntress researchers break down how EvilTokens, Knight Office, and Kali365 capture and replay M365 tokens, plus how defenders can detect and contain them. ","image":["https://www.bleepstatic.com/content/posts/2026/11/15/huntress-microsoft-365-phishing.jpg"],"datePublished":"2026-11-18T03:28:31+00:00","dateModified":"2026-11-18T03:28:31+00:00","author":{"@type":"Person","name":"TheTools"},"publisher":{"@type":"Organization","name":"viral-news.eu","logo":{"@type":"ImageObject","url":"https://viral-news.eu/css/style.css"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://viral-news.eu/articles/inside-modern-phishing-kits-built-to-steal-microsoft-365-ses/"}}</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="logo" href="../../">viral-news.eu</a>
+      <nav class="nav">
+        <a href="../../" class="filter-btn">← Home</a>
+        <span class="badge">general</span>
+        <span class="badge">BE</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="detail">
+      <a href="../../">← Back</a>
+      <img src="https://www.bleepstatic.com/content/posts/2026/11/15/huntress-microsoft-365-phishing.jpg" alt="" loading="lazy" onerror="this.style.display='none'" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin-top:12px" />
+      <div class="badge">general</div>
+      <h1>Inside Modern Phishing Kits Built to Steal Microsoft 365 Sessions</h1>
+      <div style="color:#6b7280;font-size:.9rem">TheTools · 18.11.2026 03:28 · <a href="https://www.bleepingcomputer.com/news/security/inside-modern-phishing-kits-built-to-steal-microsoft-365-sessions/" target="_blank" rel="noopener">source</a> · <a href="https://viral-news.eu/articles/inside-modern-phishing-kits-built-to-steal-microsoft-365-ses/">permalink</a></div>
+      <div class="content"><ul>
+                <li>November 17, 2026</li>
+                <li>10:01 AM</li>
+                
+                
+              </ul><p>It’s never been easier to steal credentials, thanks to a growing number of phishing kits that give aspiring attackers everything they need in one convenient interface. Some now come with admin dashboards and round-the-clock support, like a SaaS business, and they’re designed specifically to steal Microsoft 365 session tokens.</p><p>Even entry-level attackers who replay a stolen token can end up in an active session where the login and MFA are already complete, with instant access to the victim’s cloud resources and email. </p><p>Huntress researchers analyzed three of these modern phishing kits. This article breaks down how they capture and replay tokens and what defenders can do about it. </p><h2>What’s inside a phishing kit</h2><p>A <a href="https://www.huntress.com/blog/unboxing-phishing-kits?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">phishing kit</a> is a pre-packaged set of code and templates, with instructions for launching a phishing campaign and using the data it steals for malicious activity. Basic kits are often simple HTML and script files that spin up a single fake login page. </p><p>More advanced kits feature admin dashboards that attackers use to track victims, modify phishing page content, and relay credentials in real time.</p><p>To understand why these kits are so dangerous, it helps to look at how they turn phishing lures into usable sessions. </p><h2><a href="https://www.huntress.com/resources/2026-cyber-threat-report-phishing?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">2026 Cyber Threat Report: State of Phishing</a></h2><p>Phishing has been around forever, but it’s not slowing down. It’s just getting sneakier.</p><p>The Huntress State of Phishing report walks through the top phishing trends over the last year, from the lure themes and impersonated brands to the psychological tricks designed to slip past your defenses. And it shows you how to turn your people from a vulnerability into your strongest line of defense.</p><h2>When attackers pivot from passwords to sessions</h2><p>Phishing kits now give attackers usable authenticated sessions through three tradecraft techniques.</p><p>In a <a href="https://www.huntress.com/blog/tradecraft-tuesday-device-code-phishing-explained?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">device code phishing</a> attack, the victim authenticates directly with the identity provider while the attacker quietly captures the resulting authorization and uses it. The flow reduces friction for attackers because the victim never types credentials into an unfamiliar page, so the entire experience feels like a normal sign-in. </p><figure class="image" style="display:inline-block"><img alt="Figure 1: Device code phishing attack flow" src="https://www.bleepstatic.com/images/news/security/h/huntress-labs/microsoft-365-phishing/device-code-phishing.jpg">
+<figcaption><strong>Figure 1: Device code phishing attack flow</strong></figcaption>
+</figure><p>AitM attacks reveal the limitations of MFA; the threat actor relays the authentication flow in real time, either with a fake login page or by intercepting an exchange within the legitimate app. The victim completes the MFA prompt while the attacker captures the resulting session information.</p><p>This is why successfully completed MFA does not make the session trustworthy on its own. </p><figure class="image" style="display:inline-block"><img alt="Figure 2: Example of an AiTM attack " src="https://www.bleepstatic.com/images/news/security/h/huntress-labs/microsoft-365-phishing/aitm.jpg">
+<figcaption><strong>Figure 2: Example of an AiTM attack </strong></figcaption>
+</figure><p><a href="https://www.huntress.com/cybersecurity-101/topic/token-theft?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">Token theft</a> is far more valuable to attackers than password theft. After an attacker gets their hands on a sign-in token, a phishing kit like Kali365 (which we’ll dig into below) can help them replay it into an active session, where they can access cloud resources and the victim’s email accounts.</p><p>If you suspect replay, look past the original phishing page and investigate how the token was used.</p><figure class="image" style="display:inline-block"><img alt="Figure 3: How attackers convert stolen tokens into useful sessions" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+<figcaption><strong>Figure 3: How attackers convert stolen tokens into useful sessions</strong></figcaption>
+</figure><p>These techniques don’t live in isolation. In the last few months, Huntress has analyzed several advanced phishing kits targeting Microsoft 365 tokens, including <a href="https://www.huntress.com/blog/railway-paas-m365-token-replay-campaign?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">EvilTokens</a>, <a href="https://www.huntress.com/blog/inside-knight-office-m365-aitm-attack?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">Knight Office</a>, and <a href="https://www.huntress.com/blog/kali365-device-code-phishing-kit" target="_blank" rel="noopener noreferrer">Kali365</a>.  </p><h2>Three phishing kits targeting Microsoft 365 tokens</h2><p>In early 2026, Huntress discovered <a href="https://www.huntress.com/resources/eviltokens-ai-powered-phishing-report?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">EvilTokens</a> as part of a device code phishing campaign that abused the Railway Platform-as-a-Service (PaaS) platform as a token-harvesting and replay engine.</p><p>A joint effort between Microsoft’s Digital Crimes Unit and the FBI later in the year led to <a href="https://www.linkedin.com/events/7513973521094643712/?viewAsMember=true" target="_blank" rel="noopener noreferrer">the arrest</a> of one of its alleged operators.</p><p><a href="https://www.huntress.com/blog/inside-knight-office-m365-aitm-attack?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">Knight Office</a> is an <a href="https://www.huntress.com/cybersecurity-101/topic/adversary-in-the-middle-attack?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">adversary-in-the-middle (AiTM)</a> phishing kit that steals valid Microsoft 365 session tokens and feeds them into an operator console. Attackers can replay those sessions and set up persistence across tenant accounts. </p><p>The third kit, <a href="https://www.huntress.com/blog/kali365-device-code-phishing-kit?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">Kali365</a>, bundles a full Phishing as a Service (PhaaS) operation into a single control panel so operators can capture tokens through device code flows and reverse-proxy lures, replay them into live Microsoft 365 sessions, maintain access, and scale activity with built-in AI features.</p><p>Kits like these help attackers walk away with persistent access, not just usernames and passwords.</p><h2>What every defender can do about token theft</h2><p>A single signal is only one piece of the attack. Follow the full sequence from the lure to authentication, token issuance or theft, device registration, and mailbox activity to understand identity compromise in your environment. </p><p>Defenders can look for these signs of a stolen session: </p><ul style="list-style-type:square">
+	<li>
+	<p>Start by checking for successful sign-ins from unfamiliar cloud infrastructure. </p>
+	</li>
+	<li>
+	<p>Then hunt for device code authentication and automated token refresh.</p>
+	</li>
+	<li>
+	<p>Review new devices, authentication methods, and mailbox activity.</p>
+	</li>
+</ul><p role="presentation">Start by checking for successful sign-ins from unfamiliar cloud infrastructure. </p><p role="presentation">Then hunt for device code authentication and automated token refresh.</p><p role="presentation">Review new devices, authentication methods, and mailbox activity.</p><p>On the response side, keep these priorities in mind: </p><ul style="list-style-type:square">
+	<li>
+	<p>Containment must address identity artifacts, not just the original lure. </p>
+	</li>
+	<li>
+	<p>Revoke refresh tokens, then remove unauthorized devices and Windows Hello credentials. </p>
+	</li>
+	<li>
+	<p>Restrict or block device code authentication where you can, and investigate mailbox access, forwarding rules, and outbound phishing.</p>
+	</li>
+</ul><p role="presentation">Containment must address identity artifacts, not just the original lure. </p><p role="presentation">Revoke refresh tokens, then remove unauthorized devices and Windows Hello credentials. </p><p role="presentation">Restrict or block device code authentication where you can, and investigate mailbox access, forwarding rules, and outbound phishing.</p><p>Keep going after containment. Monitor for replay or re-entry, and keep hunting after the original phishing domain disappears.</p><p><strong>Join us for<a href="https://www.huntress.com/tradecraft-tuesday?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer"> Tradecraft Tuesday</a> to dig into more attacker tradecraft like this with Huntress researchers.</strong></p><p><i>Sponsored and written by <a href="https://www.huntress.com/?utm_source=bleepingcomputer&amp;utm_medium=article&amp;utm_campaign=cy26-11-camp-brand-global-prospect-all-x-x-d_speed-bleeping_computer&amp;hnt=z77taakcinhb" target="_blank" rel="noopener noreferrer">Huntress Labs</a>.</i></p></div>
+      <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb" />
+      <p style="color:#6b7280;font-size:.85rem">Source: <a href="https://www.bleepingcomputer.com/news/security/inside-modern-phishing-kits-built-to-steal-microsoft-365-sessions/" target="_blank" rel="noopener">original</a> · archived on viral-news.eu</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><a href="../../">viral-news.eu</a> · <a href="../../archive/">Archive</a></p>
+      <p><a href="../../privacy.html">Privacy Policy</a> · <a href="../../terms.html">Terms</a> · <a href="../../about.html">About</a> · <a href="../../contact.html">Contact</a></p>
+    </div>
+  </footer>
+</body>
+</html>
